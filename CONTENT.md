@@ -88,7 +88,7 @@ Earlier work stays below the recent selections and carries its original date. Th
 
 The local photographs below are selected from Vasanth Mohan’s own public LinkedIn presence and are included in this portfolio at the owner’s request. The event captions intentionally make no claim about a speaking role or exact date.
 
-The selected images were visually checked against their source posts. The portrait is 800 × 800; the three event photos are 800 × 600. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected.
+The selected images were visually checked against their source posts. The portrait is 800 × 800; eight event photos are 800 × 600 and the Step SF photo is 800 × 533. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The nine-image gallery keeps the recent selections first and follows with earlier event highlights; all images load lazily.
 
 ### Portrait
 
@@ -117,6 +117,49 @@ The selected images were visually checked against their source posts. The portra
 - Source post: https://www.linkedin.com/feed/update/urn:li:activity:7440461672286240768/
 - Caption scope: developer community gatherings around GTC; not presented as an official GTC main-stage talk
 - Visible scene: attendees talking in a crowded event venue (first image in the source post)
+
+### SambaHouse, Germany
+
+- Asset: `assets/gallery/sambahouse-germany.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7426775333942566912/
+- Caption scope: the post describes a SambaHouse event with INFERCOM and European partners in Germany, discussing sovereign AI
+- Visible scene: five attendees posing in a wood-paneled room (first image in the source post)
+
+### CrewAI Signals
+
+- Asset: `assets/gallery/crewai-signals.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7397782776374202369/
+- Caption scope: attendance and conversations with teams building production agents at CrewAI’s Signals event; no speaker role claimed
+- Visible scene: a group beside the event sign (first image in the source post)
+
+### Step SF
+
+- Asset: `assets/gallery/step-sf.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7365762381819400194/
+- Caption scope: the post describes a discussion about foundation models, inference, and enterprise-scale applications
+- Visible scene: a seated panelist speaking into a handheld microphone (third image in the source post); no identity is inferred from facial appearance
+- The local asset preserves the source’s 800 × 533 dimensions; the gallery uses its existing centered 4:3 presentation
+
+### LlamaCon
+
+- Asset: `assets/gallery/llamacon.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7323033654866169856/
+- Caption scope: attendance with the SambaNova team as LlamaCon begins; no speaking role claimed
+- Visible scene: three attendees taking a selfie in front of the stage and audience (first image in the source post)
+
+### HackUTD
+
+- Asset: `assets/gallery/hackutd.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7264755844301352960/
+- Caption scope: exploring projects built with SambaNova at the UTD hackathon; no audience counts or awards are claimed in the gallery
+- Visible scene: developers gathered around a laptop and hardware project (fourth image in the source post)
+
+### Austin developer meetup
+
+- Asset: `assets/gallery/austin-meetup.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7247411762680004610/
+- Caption scope: the post describes the first local developer meetup in Austin and agent demos
+- Visible scene: attendees seated on sofas listening to a speaker (second image in the source post)
 
 ## Material not yet published
 

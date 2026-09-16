@@ -23,6 +23,12 @@ EXPECTED_IMAGES = {
         "assets/gallery/raise-summit.jpg",
         "assets/gallery/ai-infra-summit.jpg",
         "assets/gallery/gtc-community.jpg",
+        "assets/gallery/sambahouse-germany.jpg",
+        "assets/gallery/crewai-signals.jpg",
+        "assets/gallery/step-sf.jpg",
+        "assets/gallery/llamacon.jpg",
+        "assets/gallery/hackutd.jpg",
+        "assets/gallery/austin-meetup.jpg",
     ],
     "about.html": ["assets/vasanth-mohan.jpg"],
 }
@@ -31,6 +37,20 @@ EXPECTED_DECLARED_DIMENSIONS = {
     "assets/gallery/raise-summit.jpg": ("800", "600"),
     "assets/gallery/ai-infra-summit.jpg": ("800", "600"),
     "assets/gallery/gtc-community.jpg": ("800", "600"),
+    "assets/gallery/sambahouse-germany.jpg": ("800", "600"),
+    "assets/gallery/crewai-signals.jpg": ("800", "600"),
+    "assets/gallery/step-sf.jpg": ("800", "533"),
+    "assets/gallery/llamacon.jpg": ("800", "600"),
+    "assets/gallery/hackutd.jpg": ("800", "600"),
+    "assets/gallery/austin-meetup.jpg": ("800", "600"),
+}
+ADDITIONAL_GALLERY_SOURCES = {
+    "sambahouse-germany": "7426775333942566912",
+    "crewai-signals": "7397782776374202369",
+    "step-sf": "7365762381819400194",
+    "llamacon": "7323033654866169856",
+    "hackutd": "7264755844301352960",
+    "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
     "https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live",
@@ -48,6 +68,10 @@ REQUIRED_SOURCES = {
     "https://www.youtube.com/c/FusedVR",
 }
 VOID_ELEMENTS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+REQUIRED_SOURCES.update(
+    f"https://www.linkedin.com/feed/update/urn:li:activity:{activity}/"
+    for activity in ADDITIONAL_GALLERY_SOURCES.values()
+)
 
 
 class PortfolioParser(HTMLParser):
@@ -209,6 +233,19 @@ def main() -> int:
 
     actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
     checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
+    gallery_figures = re.findall(r"<figure\b[^>]*>.*?</figure>", html_by_page["gallery.html"], re.DOTALL)
+    checks.check(
+        len(gallery_figures) == 9 and all(
+            sum(
+                f'src="assets/gallery/{name}.jpg"' in figure
+                and f'https://www.linkedin.com/feed/update/urn:li:activity:{activity}/' in figure
+                and 'loading="lazy"' in figure
+                for figure in gallery_figures
+            ) == 1
+            for name, activity in ADDITIONAL_GALLERY_SOURCES.items()
+        ),
+        "nine gallery photographs retain their own source links and new images load lazily",
+    )
     checks.check(
         all(
             len(data.get("alt", "").strip()) >= 12 and data.get("alt", "").strip().lower() not in {"image", "photo", "portrait", "thumbnail"}
@@ -259,7 +296,7 @@ def main() -> int:
     checks.check(not re.search(r"\b20\d{2}\b", html_by_page["gallery.html"]), "gallery copy does not infer event dates")
     checks.check(
         all(caption in html_by_page["gallery.html"] for caption in ("RAISE Summit, Paris", "AI Infra Summit", "Developer gatherings around GTC")),
-        "gallery uses the three conservative event captions",
+        "gallery retains the original conservative event captions",
     )
     checks.check(
         "Head of Dev Rel &amp; Product Marketing" in combined_html and "San Jose, California" in combined_html,

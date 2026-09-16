@@ -7,7 +7,7 @@ A fast, accessible, static portfolio of selected writing, presentations, and pub
 - `index.html` — short introduction, portrait, and selected links
 - `writing.html` — recent writing and selected earlier books/tutorials
 - `talks.html` — Presentations: talks, podcasts, and panels; the original URL is retained for existing links
-- `gallery.html` — three sourced event photographs
+- `gallery.html` — nine sourced photographs from conferences, hackathons, and developer meetups
 - `about.html` — profile, public links, and copyable speaker bios
 - `styles.css` — shared editorial layout, responsive rules, print treatment, and design tokens
 - `script.js` — About-page bio copy controls with a clipboard fallback and live status
