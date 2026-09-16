@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 import re
@@ -324,6 +325,31 @@ def main() -> int:
     checks.check(
         "Head of Dev Rel &amp; Product Marketing" in combined_html and "San Jose, California" in combined_html,
         "profile role and location match the verified LinkedIn wording",
+    )
+    linkedin_headline = "Head of Dev Rel & Product Marketing @ SambaNova | Agentic AI, Fast & Energy-Efficient Inference, Sovereign AI"
+    short_versions = [
+        re.search(pattern, html_by_page[page])
+        for page, pattern in (
+            ("index.html", r'<p class="page-lede">([^<]+)</p>'),
+            ("about.html", r'<p class="about-lead">([^<]+)</p>'),
+            ("about.html", r'<p id="short-bio">([^<]+)</p>'),
+        )
+    ]
+    checks.check(
+        all(match and unescape(match.group(1)).strip() == linkedin_headline for match in short_versions),
+        "the short bio and page introductions use the LinkedIn headline verbatim",
+    )
+    full_bio_match = re.search(r'<p id="full-bio">(.*?)</p>', html_by_page["about.html"], re.DOTALL)
+    full_bio_text = unescape(re.sub(r"<[^>]+>", "", full_bio_match.group(1))).strip() if full_bio_match else ""
+    checks.check(
+        200 <= len(full_bio_text.split()) <= 350
+        and len(full_bio_text.split("\n\n")) == 4
+        and all(topic in full_bio_text for topic in (
+            "SambaNova", "MobiledgeX", "FusedVR", "Unity", "SteamVR",
+            "Creating Augmented and Virtual Realities", "Erin Pangilinan", "Steve Lukas",
+            "AI By the Bay", "Hacking Agents", "AWE USA", "EnterVR",
+        )),
+        "the full bio covers the verified career in four copyable paragraphs",
     )
 
     prohibited_copy = ("forthcoming", "credits will appear", "no stock", "official gtc", "main-stage", "main stage")

@@ -13,6 +13,15 @@ Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & 
 
 ## Published selections
 
+### Biography wording
+
+- The homepage introduction, About-page introduction, and copyable short bio use the exact LinkedIn headline: **Head of Dev Rel & Product Marketing @ SambaNova | Agentic AI, Fast & Energy-Efficient Inference, Sovereign AI**.
+- This is the profile headline, not an invented third-person summary or a claim to reproduce LinkedIn's About section. Source: https://www.linkedin.com/in/v-mohan
+- The full bio is original, third-person copy covering the current AI work and the earlier edge-computing and immersive-technology work. Paragraph breaks are preserved in the copied text.
+- The historical MobiledgeX role and prototype-to-production developer-support description come from the official AWE USA 2021 speaker biography: https://www.awexr.com/usa-2021/speaker/2796-vasanth-mohan
+- Inference topics are grounded in the SambaNova bylined article and recorded talks below. AR/VR and 5G topics are grounded in the AWE panel record. FusedVR teaching, O'Reilly co-authorship with Erin Pangilinan and Steve Lukas, and the EnterVR appearance are grounded in the original sources below.
+- The biography does not infer degrees, employer tenure, audience figures, awards, production credits, or responsibility for hardware engineering from those sources.
+
 ### Writing
 
 - Display title: **The First Disaggregated Inference Demo for AI Agents Is Live**
