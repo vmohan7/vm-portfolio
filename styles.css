@@ -278,6 +278,11 @@ h2 {
   transition: filter 160ms ease;
 }
 .video-preview:hover img { filter: saturate(1) contrast(1); }
+.cover-preview img {
+  object-fit: contain;
+  object-position: center;
+  background: var(--paper-deep);
+}
 .play-label {
   position: absolute;
   right: .75rem;

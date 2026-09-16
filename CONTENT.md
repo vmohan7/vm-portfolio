@@ -54,7 +54,12 @@ Earlier work stays below the recent selections and carries its original date. Th
 - Speaker cross-check: https://www.awexr.com/usa-2021/speaker/2796-vasanth-mohan
 - Event date: November 11, 2021, on the official AWE USA 2021 agenda
 - Credit: **Panelist**; the description explicitly identifies a panel and lists Vasanth Mohan of MobiledgeX
-- Link is session information, not a claimed recording
+- Session-information link remains attached to the title and details action
+- Official recording: https://www.youtube.com/watch?v=CXUXfpjjcPQ
+- Recording publisher: **AWE XR**; exact video title matches the official session, with publication metadata dated December 29, 2021 (not the event date)
+- Preview asset: `assets/presentations/awe-2021.jpg` (1280 × 720)
+- Image source: the official recording’s YouTube preview, https://i.ytimg.com/vi/CXUXfpjjcPQ/maxresdefault.jpg
+- Use: a linked video thumbnail, not a gallery photo or a claim that the person pictured is Vasanth; no production credit is inferred
 
 ### EnterVR podcast
 
@@ -64,6 +69,10 @@ Earlier work stays below the recent selections and carries its original date. Th
 - Public release date: December 17, 2019
 - Credit: **Podcast guest**; episode notes name Vasanth and describe a conversation about VR adoption, headsets, and the metaverse
 - iHeart labels the episode explicit; no claim is made that it is a recent appearance or that audio playback was tested
+- Preview asset: `assets/presentations/entervr-2019.jpg` (328 × 328)
+- Image source: the episode artwork advertised in the iHeart page’s image `srcset`, https://i.iheart.com/v3/catalog/episode/54189932?ops=ratio%281%2C1%29%2Cscale%28328%2C0%29&cacheable=true
+- Use: original episode artwork showing an illustrated island house, not an event photograph or a portrait; the square artwork is displayed without cropping
+- Both added presentation previews are optimized local JPEGs with EXIF metadata removed, avoiding dependencies on temporary image URLs
 
 ### AR/VR book
 

@@ -18,6 +18,8 @@ EXPECTED_IMAGES = {
     "talks.html": [
         "https://i.ytimg.com/vi/7klpNFoI6Cs/maxresdefault.jpg",
         "https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg",
+        "assets/presentations/awe-2021.jpg",
+        "assets/presentations/entervr-2019.jpg",
     ],
     "gallery.html": [
         "assets/gallery/raise-summit.jpg",
@@ -34,6 +36,8 @@ EXPECTED_IMAGES = {
 }
 EXPECTED_DECLARED_DIMENSIONS = {
     "assets/vasanth-mohan.jpg": ("800", "800"),
+    "assets/presentations/awe-2021.jpg": ("1280", "720"),
+    "assets/presentations/entervr-2019.jpg": ("328", "328"),
     "assets/gallery/raise-summit.jpg": ("800", "600"),
     "assets/gallery/ai-infra-summit.jpg": ("800", "600"),
     "assets/gallery/gtc-community.jpg": ("800", "600"),
@@ -56,6 +60,7 @@ REQUIRED_SOURCES = {
     "https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live",
     "https://www.youtube.com/watch?v=7klpNFoI6Cs",
     "https://www.youtube.com/watch?v=ekB2HKu8__M",
+    "https://www.youtube.com/watch?v=CXUXfpjjcPQ",
     "https://www.linkedin.com/in/v-mohan",
     "https://github.com/vmohan7",
     "https://www.linkedin.com/feed/update/urn:li:activity:7480532691969536000/",
@@ -219,7 +224,7 @@ def main() -> int:
     checks.check(not unresolved_fragments, "same-page and cross-page fragments resolve")
     checks.check(
         all(
-            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=3"]
+            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=4"]
             for parser in parsers.values()
         ),
         "all five pages use the versioned shared stylesheet",
@@ -233,6 +238,24 @@ def main() -> int:
 
     actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
     checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
+    archive_previews = re.findall(
+        r'<li class="archive-item talk-entry"[^>]*>.*?</li>', html_by_page["talks.html"], re.DOTALL
+    )
+    checks.check(
+        len(archive_previews) == 2 and all(
+            f'assets/presentations/{name}.jpg' in item
+            and f'href="{source}"' in item
+            and 'class="video-preview' in item
+            and 'loading="lazy"' in item
+            for name, source, item in zip(
+                ("awe-2021", "entervr-2019"),
+                ("https://www.youtube.com/watch?v=CXUXfpjjcPQ",
+                 "https://www.iheart.com/podcast/256-entervr-30992177/episode/exploring-the-current-landscape-of-the-metaverse-with-vasanth-mohan-from-fused-vr-54189932"),
+                archive_previews,
+            )
+        ),
+        "both earlier presentations have lazy-loaded source-linked previews in the shared talk layout",
+    )
     gallery_figures = re.findall(r"<figure\b[^>]*>.*?</figure>", html_by_page["gallery.html"], re.DOTALL)
     checks.check(
         len(gallery_figures) == 9 and all(
@@ -348,6 +371,11 @@ def main() -> int:
     css = CSS_PATH.read_text(encoding="utf-8")
     js = JS_PATH.read_text(encoding="utf-8")
     checks.check("prefers-reduced-motion" in css and ":focus-visible" in css, "CSS includes reduced-motion and visible-focus treatments")
+    checks.check(
+        bool(re.search(r"\.cover-preview img\s*\{[^}]*object-fit:\s*contain\b", css))
+        and bool(re.search(r"\.cover-preview img\s*\{[^}]*object-position:\s*center\b", css)),
+        "podcast artwork is centered without cropping inside the shared preview frame",
+    )
     mobile_css = css.split("@media (max-width: 760px)", 1)[-1].split("@media", 1)[0]
     checks.check(
         bool(re.search(r"\.portrait-frame\s*\{[^}]*justify-self:\s*center\b", mobile_css)),
