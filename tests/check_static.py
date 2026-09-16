@@ -41,6 +41,11 @@ REQUIRED_SOURCES = {
     "https://www.linkedin.com/feed/update/urn:li:activity:7480532691969536000/",
     "https://www.linkedin.com/feed/update/urn:li:activity:7456100760976789504/",
     "https://www.linkedin.com/feed/update/urn:li:activity:7440461672286240768/",
+    "https://www.awexr.com/usa-2021/agenda/2443-5g-edge-compute-essential-infrastructure-to-scale-",
+    "https://www.iheart.com/podcast/256-entervr-30992177/episode/exploring-the-current-landscape-of-the-metaverse-with-vasanth-mohan-from-fused-vr-54189932",
+    "https://www.oreilly.com/library/view/creating-augmented-and/9781492044185/cover.html",
+    "https://medium.com/fusedvr/implementing-vr-scene-transitions-c27861a9ac77",
+    "https://www.youtube.com/c/FusedVR",
 }
 VOID_ELEMENTS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 
@@ -190,7 +195,7 @@ def main() -> int:
     checks.check(not unresolved_fragments, "same-page and cross-page fragments resolve")
     checks.check(
         all(
-            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=2"]
+            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=3"]
             for parser in parsers.values()
         ),
         "all five pages use the versioned shared stylesheet",
@@ -237,6 +242,15 @@ def main() -> int:
     content_ledger = (ROOT / "CONTENT.md").read_text(encoding="utf-8")
     checks.check(all(source in combined_html for source in REQUIRED_SOURCES), "all verified public sources remain linked from the appropriate pages")
     checks.check(all(source in content_ledger for source in REQUIRED_SOURCES), "CONTENT.md retains every published source")
+    checks.check(
+        {"earlier-work", "awe-2021", "entervr-2019"}.issubset(parsers["talks.html"].ids)
+        and {"earlier-work", "ar-vr-book-2019", "vr-transitions-2017"}.issubset(parsers["writing.html"].ids)
+        and all(f'datetime="{date}"' in html_by_page[page] for page, date in (
+            ("talks.html", "2021-11-11"), ("talks.html", "2019-12-17"),
+            ("writing.html", "2019-04"), ("writing.html", "2017-06-08"),
+        )),
+        "four verified earlier selections are grouped and explicitly dated",
+    )
     checks.check(
         all("https://www.linkedin.com/in/v-mohan" in markup and "https://github.com/vmohan7" in markup for markup in html_by_page.values()),
         "every page retains the verified profile links",
@@ -297,6 +311,11 @@ def main() -> int:
     css = CSS_PATH.read_text(encoding="utf-8")
     js = JS_PATH.read_text(encoding="utf-8")
     checks.check("prefers-reduced-motion" in css and ":focus-visible" in css, "CSS includes reduced-motion and visible-focus treatments")
+    mobile_css = css.split("@media (max-width: 760px)", 1)[-1].split("@media", 1)[0]
+    checks.check(
+        bool(re.search(r"\.portrait-frame\s*\{[^}]*justify-self:\s*center\b", mobile_css)),
+        "Home and About portraits are centered in the single-column mobile layout",
+    )
     checks.check(
         "font-size: clamp(2.15rem, 5vw, 3rem)" in css and "font-size: clamp(1.55rem, 3vw, 1.875rem)" in css,
         "type scale caps page titles at 48px and section titles at 30px",

@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGES = {
     "index.html": "Home",
     "writing.html": "Writing",
-    "talks.html": "Talks",
+    "talks.html": "Presentations",
     "gallery.html": "Gallery",
     "about.html": "About",
 }
@@ -22,6 +22,7 @@ class NavigationParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.in_primary_nav = False
         self.nav_depth = 0
+        self.in_link = False
         self.links: list[dict[str, str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -34,9 +35,17 @@ class NavigationParser(HTMLParser):
             if tag == "nav":
                 self.nav_depth += 1
             elif tag == "a":
+                data["text"] = ""
                 self.links.append(data)
+                self.in_link = True
+
+    def handle_data(self, data: str) -> None:
+        if self.in_primary_nav and self.in_link:
+            self.links[-1]["text"] += data
 
     def handle_endtag(self, tag: str) -> None:
+        if tag == "a":
+            self.in_link = False
         if self.in_primary_nav and tag == "nav":
             self.nav_depth -= 1
             if self.nav_depth == 0:
@@ -63,6 +72,12 @@ def main() -> int:
             failures.append(f"{filename}: primary navigation must link to {expected_hrefs}, got {hrefs}")
         if current != [filename]:
             failures.append(f"{filename}: aria-current must identify only {filename}, got {current}")
+        if [link["text"].strip() for link in parser.links] != list(PAGES.values()):
+            failures.append(f"{filename}: navigation must use the Presentations label")
+
+    presentations = (ROOT / "talks.html").read_text(encoding="utf-8")
+    if "<h1>Presentations</h1>" not in presentations or "podcast" not in presentations.lower():
+        failures.append("talks.html: Presentations must explicitly include podcast appearances")
 
     if failures:
         for failure in failures:
@@ -72,6 +87,7 @@ def main() -> int:
 
     print("PASS  all five root pages expose the shared page navigation")
     print("PASS  each page identifies its current navigation link")
+    print("PASS  Presentations includes podcasts and preserves the existing talks.html URL")
     return 0
 
 

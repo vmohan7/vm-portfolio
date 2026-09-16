@@ -235,6 +235,25 @@ h2 {
   font-size: 1.05rem;
 }
 
+.earlier-work { max-width: 54rem; margin-top: clamp(3.5rem, 6vw, 5.5rem); }
+.archive-list { margin: 0; padding: 0; list-style: none; }
+.archive-item { padding: 1.5rem 0; border-top: 1px solid var(--line); }
+.archive-item h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+.archive-item h3 a { text-decoration: none; }
+.archive-item h3 a:hover { color: var(--accent-dark); }
+.archive-item > p:not(.entry-kicker) {
+  max-width: var(--measure);
+  margin: .75rem 0;
+  color: var(--muted);
+  font-family: var(--serif);
+}
+
 .talk-list { display: grid; gap: clamp(3.25rem, 7vw, 5.5rem); }
 .talk-entry {
   display: grid;
@@ -394,7 +413,7 @@ h2 {
   .work-entry,
   .talk-entry,
   .about-profile { grid-template-columns: 1fr; }
-  .portrait-frame { width: min(72vw, 18rem); justify-self: start; }
+  .portrait-frame { width: min(72vw, 18rem); justify-self: center; }
   .home-intro .portrait-frame { grid-row: 1; }
   .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

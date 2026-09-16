@@ -43,6 +43,47 @@ Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & 
 - Preview: https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg
 - Omitted because not verified: event date, upload date, duration, production credit
 
+## Selected earlier work
+
+Earlier work stays below the recent selections and carries its original date. The Presentations page includes talks, podcast appearances, and panels at the existing `talks.html` URL; its format is not limited to AI. Do not list upcoming appearances until their public details are confirmed.
+
+### AWE USA panel
+
+- Display title: **5G Edge Compute: Essential Infrastructure to Scale AR & VR**
+- Source: https://www.awexr.com/usa-2021/agenda/2443-5g-edge-compute-essential-infrastructure-to-scale-
+- Speaker cross-check: https://www.awexr.com/usa-2021/speaker/2796-vasanth-mohan
+- Event date: November 11, 2021, on the official AWE USA 2021 agenda
+- Credit: **Panelist**; the description explicitly identifies a panel and lists Vasanth Mohan of MobiledgeX
+- Link is session information, not a claimed recording
+
+### EnterVR podcast
+
+- Display title: **Exploring the Current Landscape of the Metaverse**
+- Exact episode title: **Exploring the current landscape of the metaverse with Vasanth Mohan from Fused VR**
+- Source: https://www.iheart.com/podcast/256-entervr-30992177/episode/exploring-the-current-landscape-of-the-metaverse-with-vasanth-mohan-from-fused-vr-54189932
+- Public release date: December 17, 2019
+- Credit: **Podcast guest**; episode notes name Vasanth and describe a conversation about VR adoption, headsets, and the metaverse
+- iHeart labels the episode explicit; no claim is made that it is a recent appearance or that audio playback was tested
+
+### AR/VR book
+
+- Title: **Creating Augmented and Virtual Realities**
+- Publisher source: https://www.oreilly.com/library/view/creating-augmented-and/9781492044185/cover.html
+- Date: April 2019
+- Public publisher byline: Erin Pangilinan, Steve Lukas, Vasanth Mohan
+- Display attribution: “With Erin Pangilinan and Steve Lukas”; no sole-authorship or unverified chapter-credit claim
+- Only the public publisher listing and contents preview were inspected, not subscription-only book content
+
+### FusedVR developer education
+
+- Tutorial: **Implementing VR Scene Transitions**
+- Source: https://medium.com/fusedvr/implementing-vr-scene-transitions-c27861a9ac77
+- Byline: Vasanth Mohan; published June 8, 2017
+- Credit: **Author**; historical Unity/SteamVR tutorial, not current-version API guidance
+- Video archive: https://www.youtube.com/c/FusedVR
+- The tutorial's publication description links this channel; the channel's public description identifies Fuseman as Vasanth Mohan
+- The archive link is a collection, not a claim that every video is a conference presentation
+
 ## Published photographs
 
 The local photographs below are selected from Vasanth Mohan’s own public LinkedIn presence and are included in this portfolio at the owner’s request. The event captions intentionally make no claim about a speaking role or exact date.
@@ -83,7 +124,7 @@ Keep the following documentation-only until exact public evidence is available:
 
 - production credits with exact role and linked asset
 - additional social profiles
-- older/archive material, including any GTC appearance, with exact event and session details
+- additional archive material, including any GTC appearance, until exact event and session details are verified
 
 Do not fill these gaps with stock photography, inferred credits, estimated dates, or generic event records.
 

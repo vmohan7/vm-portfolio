@@ -1,12 +1,12 @@
 # Vasanth Mohan — Selected Work
 
-A fast, accessible, static portfolio of selected writing, talks, and public work by Vasanth Mohan.
+A fast, accessible, static portfolio of selected writing, presentations, and public work by Vasanth Mohan.
 
 ## Structure
 
 - `index.html` — short introduction, portrait, and selected links
-- `writing.html` — verified published writing
-- `talks.html` — verified recorded talks and official video previews
+- `writing.html` — recent writing and selected earlier books/tutorials
+- `talks.html` — Presentations: talks, podcasts, and panels; the original URL is retained for existing links
 - `gallery.html` — three sourced event photographs
 - `about.html` — profile, public links, and copyable speaker bios
 - `styles.css` — shared editorial layout, responsive rules, print treatment, and design tokens
