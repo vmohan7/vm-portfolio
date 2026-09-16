@@ -4,12 +4,17 @@ A fast, accessible, static portfolio of selected writing, talks, and public work
 
 ## Structure
 
-- `index.html` — semantic page content and metadata
-- `styles.css` — editorial layout, responsive rules, print treatment, and design tokens
-- `script.js` — speaker-bio copy controls with a clipboard fallback and live status
-- `assets/favicon.svg` — site favicon
+- `index.html` — short introduction, portrait, and selected links
+- `writing.html` — verified published writing
+- `talks.html` — verified recorded talks and official video previews
+- `gallery.html` — three sourced event photographs
+- `about.html` — profile, public links, and copyable speaker bios
+- `styles.css` — shared editorial layout, responsive rules, print treatment, and design tokens
+- `script.js` — About-page bio copy controls with a clipboard fallback and live status
+- `assets/` — local portrait, gallery photographs, and favicon
 - `CONTENT.md` — public source ledger and safe update guide
-- `tests/check_static.py` — dependency-free static and content-integrity checks
+- `tests/check_navigation.py` — focused five-page navigation contract
+- `tests/check_static.py` — dependency-free cross-page and content-integrity checks
 - `.nojekyll` — serves the site unchanged on GitHub Pages
 
 There is no build step, package manager, framework, CMS, or runtime dependency.
@@ -22,11 +27,12 @@ From the repository root:
 python3 -m http.server 8000
 ```
 
-Then open `http://localhost:8000/`.
+Then open `http://localhost:8000/`. Each root HTML page also loads directly, for example `http://localhost:8000/talks.html`.
 
 ## Run checks
 
 ```sh
+python3 tests/check_navigation.py
 python3 tests/check_static.py
 node --check script.js
 node tests/check_copy.js

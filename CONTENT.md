@@ -9,7 +9,7 @@ This file records the public evidence behind the portfolio and the rules for add
 | LinkedIn | https://www.linkedin.com/in/v-mohan | Public profile link |
 | GitHub | https://github.com/vmohan7 | Public profile link |
 
-Current public positioning used on the site: Vasanth Mohan leads developer relations and product marketing at SambaNova. Focus areas are agentic AI, coding agents, inference, AI infrastructure, enterprise adoption, developer communities, and technical storytelling.
+Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & Product Marketing at SambaNova and is based in San Jose, California. Focus areas are agentic AI, coding agents, fast and energy-efficient inference, sovereign AI, AI infrastructure, enterprise adoption, developer communities, and technical storytelling.
 
 ## Published selections
 
@@ -43,16 +43,49 @@ Current public positioning used on the site: Vasanth Mohan leads developer relat
 - Preview: https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg
 - Omitted because not verified: event date, upload date, duration, production credit
 
-## Pending sections
+## Published photographs
 
-The site intentionally leaves these areas unpopulated until source material is available:
+The local photographs below are selected from Vasanth Mohan’s own public LinkedIn presence and are included in this portfolio at the owner’s request. The event captions intentionally make no claim about a speaking role or exact date.
+
+The selected images were visually checked against their source posts. The portrait is 800 × 800; the three event photos are 800 × 600. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected.
+
+### Portrait
+
+- Asset: `assets/vasanth-mohan.jpg`
+- Context: public LinkedIn profile portrait
+- Visible scene: outdoor portrait
+- Source: https://www.linkedin.com/in/v-mohan
+
+### RAISE Summit, Paris
+
+- Asset: `assets/gallery/raise-summit.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7480532691969536000/
+- Caption scope: attendance and conversations at RAISE Summit in Paris; no speaker role stated
+- Visible scene: visitors at the SambaNova exhibition booth (third image in the source post)
+
+### AI Infra Summit
+
+- Asset: `assets/gallery/ai-infra-summit.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7456100760976789504/
+- Caption scope: event attendance; no role or date inferred
+- Visible scene: two speakers in conversation on a lounge-style stage (first image in the source post)
+
+### Developer gatherings around GTC
+
+- Asset: `assets/gallery/gtc-community.jpg`
+- Source post: https://www.linkedin.com/feed/update/urn:li:activity:7440461672286240768/
+- Caption scope: developer community gatherings around GTC; not presented as an official GTC main-stage talk
+- Visible scene: attendees talking in a crowded event venue (first image in the source post)
+
+## Material not yet published
+
+Keep the following documentation-only until exact public evidence is available:
 
 - production credits with exact role and linked asset
-- original gallery photographs and permission to publish
 - additional social profiles
 - older/archive material, including any GTC appearance, with exact event and session details
 
-The empty states are intentional. Do not replace them with stock photography, inferred credits, estimated dates, or generic event records.
+Do not fill these gaps with stock photography, inferred credits, estimated dates, or generic event records.
 
 ## Adding an item
 
@@ -70,9 +103,10 @@ For gallery images, add optimized originals under `assets/gallery/`, write usefu
 
 ## Editing conventions
 
+- keep the type and spacing restrained, with separate pages rather than an all-in-one scrolling presentation
 - newest verified work appears first
 - recent work remains in the main sequence; older highlights move to a clearly labeled archive
 - visible link text should describe the destination
 - external links open in a new tab and include `rel="noopener noreferrer"`
 - every copy change should preserve valid heading order and plain-language link labels
-- run `python3 tests/check_static.py`, `node --check script.js`, and `node tests/check_copy.js` after edits
+- run `python3 tests/check_navigation.py`, `python3 tests/check_static.py`, `node --check script.js`, and `node tests/check_copy.js` after edits

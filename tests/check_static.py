@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Focused, dependency-free checks for the static portfolio."""
+"""Dependency-free structure, content, and provenance checks for the portfolio."""
 
 from __future__ import annotations
 
@@ -9,9 +9,40 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML_PATH = ROOT / "index.html"
+PAGE_NAMES = ("index.html", "writing.html", "talks.html", "gallery.html", "about.html")
 CSS_PATH = ROOT / "styles.css"
 JS_PATH = ROOT / "script.js"
+EXPECTED_IMAGES = {
+    "index.html": ["assets/vasanth-mohan.jpg"],
+    "writing.html": [],
+    "talks.html": [
+        "https://i.ytimg.com/vi/7klpNFoI6Cs/maxresdefault.jpg",
+        "https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg",
+    ],
+    "gallery.html": [
+        "assets/gallery/raise-summit.jpg",
+        "assets/gallery/ai-infra-summit.jpg",
+        "assets/gallery/gtc-community.jpg",
+    ],
+    "about.html": ["assets/vasanth-mohan.jpg"],
+}
+EXPECTED_DECLARED_DIMENSIONS = {
+    "assets/vasanth-mohan.jpg": ("800", "800"),
+    "assets/gallery/raise-summit.jpg": ("800", "600"),
+    "assets/gallery/ai-infra-summit.jpg": ("800", "600"),
+    "assets/gallery/gtc-community.jpg": ("800", "600"),
+}
+REQUIRED_SOURCES = {
+    "https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live",
+    "https://www.youtube.com/watch?v=7klpNFoI6Cs",
+    "https://www.youtube.com/watch?v=ekB2HKu8__M",
+    "https://www.linkedin.com/in/v-mohan",
+    "https://github.com/vmohan7",
+    "https://www.linkedin.com/feed/update/urn:li:activity:7480532691969536000/",
+    "https://www.linkedin.com/feed/update/urn:li:activity:7456100760976789504/",
+    "https://www.linkedin.com/feed/update/urn:li:activity:7440461672286240768/",
+}
+VOID_ELEMENTS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 
 
 class PortfolioParser(HTMLParser):
@@ -23,10 +54,15 @@ class PortfolioParser(HTMLParser):
         self.images: list[dict[str, str]] = []
         self.heading_levels: list[int] = []
         self.scripts: list[dict[str, str]] = []
-        self.stylesheets: list[str] = []
+        self.link_elements: list[dict[str, str]] = []
+        self.copy_targets: list[str] = []
+        self.live_regions: list[dict[str, str]] = []
+        self.bio_h4_count = 0
+        self.stack: list[tuple[str, set[str]]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key: value or "" for key, value in attrs}
+        classes = set(data.get("class", "").split())
         element_id = data.get("id")
         if element_id:
             if element_id in self.ids:
@@ -38,102 +74,251 @@ class PortfolioParser(HTMLParser):
             self.images.append(data)
         elif tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
             self.heading_levels.append(int(tag[1]))
+            if tag == "h4" and any("bio-block" in ancestor_classes for _, ancestor_classes in self.stack):
+                self.bio_h4_count += 1
         elif tag == "script":
             self.scripts.append(data)
-        elif tag == "link" and "stylesheet" in data.get("rel", "").split():
-            self.stylesheets.append(data.get("href", ""))
+        elif tag == "link":
+            self.link_elements.append(data)
+        if data.get("data-copy-target"):
+            self.copy_targets.append(data["data-copy-target"])
+        if data.get("role") == "status":
+            self.live_regions.append(data)
+        if tag not in VOID_ELEMENTS:
+            self.stack.append((tag, classes))
+
+    def handle_endtag(self, tag: str) -> None:
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                return
 
 
-def check(condition: bool, message: str, failures: list[str]) -> None:
-    if condition:
-        print(f"PASS  {message}")
-    else:
-        print(f"FAIL  {message}")
-        failures.append(message)
+class Checks:
+    def __init__(self) -> None:
+        self.total = 0
+        self.failures: list[str] = []
+
+    def check(self, condition: bool, message: str) -> None:
+        self.total += 1
+        if condition:
+            print(f"PASS  {message}")
+        else:
+            print(f"FAIL  {message}")
+            self.failures.append(message)
 
 
-def local_target_exists(reference: str) -> bool:
+def is_external(reference: str) -> bool:
+    return reference.startswith(("http://", "https://", "mailto:", "tel:"))
+
+
+def resolve_local(reference: str, source_path: Path) -> Path | None:
     clean = reference.split("#", 1)[0].split("?", 1)[0]
-    return not clean or (ROOT / clean).is_file()
+    if not clean:
+        return source_path
+    if clean.startswith("/"):
+        return None
+    target = (source_path.parent / clean).resolve()
+    try:
+        target.relative_to(ROOT.resolve())
+    except ValueError:
+        return None
+    return target
 
 
 def main() -> int:
-    failures: list[str] = []
+    checks = Checks()
+    page_paths = {name: ROOT / name for name in PAGE_NAMES}
     required = [
-        HTML_PATH,
+        *page_paths.values(),
         CSS_PATH,
         JS_PATH,
         ROOT / "README.md",
         ROOT / "CONTENT.md",
         ROOT / ".nojekyll",
         ROOT / "assets/favicon.svg",
+        ROOT / "tests/check_navigation.py",
         ROOT / "tests/check_copy.js",
     ]
-    check(all(path.exists() for path in required), "all required public files exist", failures)
+    checks.check(all(path.is_file() for path in required), "all five pages and required public files exist")
 
-    html = HTML_PATH.read_text(encoding="utf-8")
-    css = CSS_PATH.read_text(encoding="utf-8")
-    js = JS_PATH.read_text(encoding="utf-8")
-    parser = PortfolioParser()
-    parser.feed(html)
-    parser.close()
+    html_by_page = {name: path.read_text(encoding="utf-8") for name, path in page_paths.items()}
+    parsers: dict[str, PortfolioParser] = {}
+    for name, markup in html_by_page.items():
+        parser = PortfolioParser()
+        parser.feed(markup)
+        parser.close()
+        parsers[name] = parser
 
-    check(not parser.duplicate_ids, "HTML ids are unique", failures)
-    check(parser.heading_levels and parser.heading_levels[0] == 1, "heading outline starts with one h1", failures)
-    check(parser.heading_levels.count(1) == 1, "page contains exactly one h1", failures)
-    check(all(b - a <= 1 for a, b in zip(parser.heading_levels, parser.heading_levels[1:])), "heading levels do not skip downward", failures)
+    checks.check(all(not parser.duplicate_ids for parser in parsers.values()), "HTML ids are unique within every page")
+    checks.check(
+        all(parser.heading_levels and parser.heading_levels[0] == 1 and parser.heading_levels.count(1) == 1 for parser in parsers.values()),
+        "every page starts its outline with exactly one h1",
+    )
+    checks.check(
+        all(all(next_level - level <= 1 for level, next_level in zip(parser.heading_levels, parser.heading_levels[1:])) for parser in parsers.values()),
+        "heading levels do not skip downward on any page",
+    )
 
-    fragments = [href[1:] for href, _ in parser.hrefs if href.startswith("#") and len(href) > 1]
-    check(all(fragment in parser.ids for fragment in fragments), "all internal navigation fragments resolve", failures)
+    unresolved_fragments: list[str] = []
+    missing_local_refs: list[str] = []
+    for name, parser in parsers.items():
+        source_path = page_paths[name]
+        refs = [href for href, _ in parser.hrefs]
+        refs.extend(data.get("src", "") for data in parser.images)
+        refs.extend(data.get("src", "") for data in parser.scripts if data.get("src"))
+        refs.extend(data.get("href", "") for data in parser.link_elements if data.get("href"))
+        for reference in refs:
+            if not reference or is_external(reference):
+                continue
+            target = resolve_local(reference, source_path)
+            if target is None or not target.is_file():
+                missing_local_refs.append(f"{name}: {reference}")
 
-    local_refs = [
-        href for href, _ in parser.hrefs if href and not href.startswith(("#", "http://", "https://", "mailto:", "tel:"))
-    ]
-    local_refs.extend(parser.stylesheets)
-    local_refs.extend(data.get("src", "") for data in parser.scripts if data.get("src"))
-    check(all(local_target_exists(ref) for ref in local_refs), "all local HTML assets resolve", failures)
+        for href, _ in parser.hrefs:
+            if is_external(href) or "#" not in href:
+                continue
+            path_part, fragment = href.split("#", 1)
+            if not fragment:
+                continue
+            target = resolve_local(path_part, source_path)
+            target_name = target.name if target else ""
+            if target_name not in parsers or fragment not in parsers[target_name].ids:
+                unresolved_fragments.append(f"{name}: {href}")
 
-    external_links = [data for href, data in parser.hrefs if href.startswith(("http://", "https://"))]
-    check(
+    checks.check(not missing_local_refs, "all local page, stylesheet, script, icon, and image references resolve")
+    checks.check(not unresolved_fragments, "same-page and cross-page fragments resolve")
+    checks.check(
+        all(
+            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css"]
+            for parser in parsers.values()
+        ),
+        "all five pages use the shared stylesheet",
+    )
+
+    external_links = [data for parser in parsers.values() for href, data in parser.hrefs if href.startswith(("http://", "https://"))]
+    checks.check(
         all(data.get("target") == "_blank" and {"noopener", "noreferrer"}.issubset(set(data.get("rel", "").split())) for data in external_links),
         "external content links use safe new-tab attributes",
-        failures,
     )
-    check(all(data.get("alt", "").strip() for data in parser.images), "all images have non-empty alt text", failures)
-    check(len(parser.images) == 2 and all("i.ytimg.com/vi/" in data.get("src", "") for data in parser.images), "only the two verified video previews are present", failures)
 
-    required_sources = [
-        "https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live",
-        "https://www.youtube.com/watch?v=7klpNFoI6Cs",
-        "https://www.youtube.com/watch?v=ekB2HKu8__M",
-        "https://www.linkedin.com/in/v-mohan",
-        "https://github.com/vmohan7",
-    ]
-    check(all(source in html for source in required_sources), "all verified public links are present", failures)
-    check("June 3, 2026" in html and "AI By the Bay · 2025" in html, "verified dates are present", failures)
-
-    public_text = "\n".join(
-        path.read_text(encoding="utf-8")
-        for path in ROOT.rglob("*")
-        if path.is_file() and ".git" not in path.parts
+    actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
+    checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
+    checks.check(
+        all(
+            len(data.get("alt", "").strip()) >= 12 and data.get("alt", "").strip().lower() not in {"image", "photo", "portrait", "thumbnail"}
+            for parser in parsers.values()
+            for data in parser.images
+        ),
+        "all images have meaningful alt text",
     )
+    checks.check(
+        all(
+            (data.get("width", ""), data.get("height", "")) == EXPECTED_DECLARED_DIMENSIONS[data["src"]]
+            for parser in parsers.values()
+            for data in parser.images
+            if data.get("src") in EXPECTED_DECLARED_DIMENSIONS
+        ),
+        "local image dimensions match the supplied JPEG files",
+    )
+
+    local_image_paths = {
+        resolve_local(data["src"], page_paths[name])
+        for name, parser in parsers.items()
+        for data in parser.images
+        if data.get("src") and not is_external(data["src"])
+    }
+    checks.check(
+        all(path and path.stat().st_size > 1024 and path.read_bytes().startswith(b"\xff\xd8\xff") for path in local_image_paths),
+        "local portfolio photographs are non-empty JPEG files",
+    )
+
+    combined_html = "\n".join(html_by_page.values())
+    content_ledger = (ROOT / "CONTENT.md").read_text(encoding="utf-8")
+    checks.check(all(source in combined_html for source in REQUIRED_SOURCES), "all verified public sources remain linked from the appropriate pages")
+    checks.check(all(source in content_ledger for source in REQUIRED_SOURCES), "CONTENT.md retains every published source")
+    checks.check(
+        all("https://www.linkedin.com/in/v-mohan" in markup and "https://github.com/vmohan7" in markup for markup in html_by_page.values()),
+        "every page retains the verified profile links",
+    )
+    checks.check("June 3, 2026" in html_by_page["writing.html"] and "AI By the Bay · 2025" in html_by_page["talks.html"], "verified publication and event dates remain attached to their sources")
+    checks.check(not re.search(r"\b20\d{2}\b", html_by_page["gallery.html"]), "gallery copy does not infer event dates")
+    checks.check(
+        all(caption in html_by_page["gallery.html"] for caption in ("RAISE Summit, Paris", "AI Infra Summit", "Developer gatherings around GTC")),
+        "gallery uses the three conservative event captions",
+    )
+    checks.check(
+        "Head of Dev Rel &amp; Product Marketing" in combined_html and "San Jose, California" in combined_html,
+        "profile role and location match the verified LinkedIn wording",
+    )
+
+    prohibited_copy = ("forthcoming", "credits will appear", "no stock", "official gtc", "main-stage", "main stage")
+    checks.check(not any(phrase in combined_html.lower() for phrase in prohibited_copy), "public pages contain no placeholder or inflated event copy")
+    checks.check("production credits" not in combined_html.lower(), "unverified production credits remain documentation-only")
+
+    about = parsers["about.html"]
+    checks.check(
+        about.copy_targets == ["short-bio", "full-bio"] and all(not parsers[name].copy_targets for name in PAGE_NAMES if name != "about.html"),
+        "copy controls are present only for the two About-page bios",
+    )
+    checks.check(set(about.copy_targets).issubset(about.ids) and about.bio_h4_count == 2, "each copy control targets a bio-block with its h4 label")
+    checks.check(
+        len(about.live_regions) == 1 and about.live_regions[0].get("aria-live") == "polite",
+        "copy feedback has one polite live region on About",
+    )
+    checks.check(
+        [data.get("src", "") for data in about.scripts if data.get("src")] == ["script.js"]
+        and all(not [data.get("src", "") for data in parsers[name].scripts if data.get("src")] for name in PAGE_NAMES if name != "about.html"),
+        "the copy script loads only where the controls exist",
+    )
+
+    text_suffixes = {".html", ".css", ".js", ".md", ".py", ".svg"}
+    text_names = {".gitignore", ".nojekyll"}
+    public_text_parts: list[str] = []
+    text_decode_ok = True
+    for path in ROOT.rglob("*"):
+        if not path.is_file() or ".git" in path.parts:
+            continue
+        if path.suffix.lower() not in text_suffixes and path.name not in text_names:
+            continue
+        try:
+            public_text_parts.append(path.read_text(encoding="utf-8"))
+        except UnicodeDecodeError:
+            text_decode_ok = False
+    public_text = "\n".join(public_text_parts)
+    checks.check(text_decode_ok, "declared text files decode as UTF-8 while binary assets are skipped")
     sensitive_patterns = [
         r"/(?:root|home)/[^\s<]+",
         r"(?<!\d)-\d{9,}(?!\d)",
         r"(?:api|auth|bot)[_-]?(?:key|token)\s*[:=]",
     ]
-    check(not any(re.search(pattern, public_text, re.IGNORECASE) for pattern in sensitive_patterns), "public files exclude path, identifier, and secret-shaped data", failures)
+    checks.check(not any(re.search(pattern, public_text, re.IGNORECASE) for pattern in sensitive_patterns), "public text excludes path, identifier, and secret-shaped data")
 
-    check("prefers-reduced-motion" in css and ":focus-visible" in css, "CSS includes reduced-motion and visible-focus treatments", failures)
-    check("navigator.clipboard" in js and "document.execCommand(\"copy\")" in js, "copy control includes modern and fallback clipboard paths", failures)
-    check('role="status"' in html and 'aria-live="polite"' in html, "copy feedback has a polite live region", failures)
-    check(not re.search(r"(?:src|href)=[\"']/", html), "asset references are project-path-safe", failures)
+    css = CSS_PATH.read_text(encoding="utf-8")
+    js = JS_PATH.read_text(encoding="utf-8")
+    checks.check("prefers-reduced-motion" in css and ":focus-visible" in css, "CSS includes reduced-motion and visible-focus treatments")
+    checks.check(
+        "font-size: clamp(2.15rem, 5vw, 3rem)" in css and "font-size: clamp(1.55rem, 3vw, 1.875rem)" in css,
+        "type scale caps page titles at 48px and section titles at 30px",
+    )
+    checks.check("text-transform: uppercase" not in css and "calc(100vh" not in css, "CSS avoids heavy all-caps and viewport-filling sections")
+    checks.check("navigator.clipboard" in js and 'document.execCommand("copy")' in js, "copy control includes modern and fallback clipboard paths")
+    checks.check(not re.search(r"(?:src|href)=[\"']/", combined_html), "asset references are project-path-safe")
 
-    print(f"\n{len(failures)} failure(s); {17 - len(failures)}/17 checks passed.")
-    if failures:
+    passed = checks.total - len(checks.failures)
+    print(f"\n{len(checks.failures)} failure(s); {passed}/{checks.total} checks passed.")
+    if checks.failures:
         print("Failures:")
-        for failure in failures:
+        for failure in checks.failures:
             print(f"- {failure}")
+        if missing_local_refs:
+            print("Missing local references:")
+            for reference in missing_local_refs:
+                print(f"- {reference}")
+        if unresolved_fragments:
+            print("Unresolved fragments:")
+            for reference in unresolved_fragments:
+                print(f"- {reference}")
         return 1
     return 0
 
