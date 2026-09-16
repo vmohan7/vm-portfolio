@@ -104,6 +104,7 @@ For gallery images, add optimized originals under `assets/gallery/`, write usefu
 ## Editing conventions
 
 - keep the type and spacing restrained, with separate pages rather than an all-in-one scrolling presentation
+- bump the shared stylesheet query version across all five pages when changing CSS, and update the matching static check, so returning visitors do not keep stale styles
 - newest verified work appears first
 - recent work remains in the main sequence; older highlights move to a clearly labeled archive
 - visible link text should describe the destination

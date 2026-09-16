@@ -190,10 +190,10 @@ def main() -> int:
     checks.check(not unresolved_fragments, "same-page and cross-page fragments resolve")
     checks.check(
         all(
-            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css"]
+            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=2"]
             for parser in parsers.values()
         ),
-        "all five pages use the shared stylesheet",
+        "all five pages use the versioned shared stylesheet",
     )
 
     external_links = [data for parser in parsers.values() for href, data in parser.hrefs if href.startswith(("http://", "https://"))]
