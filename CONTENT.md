@@ -31,6 +31,19 @@ Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & 
 - Portfolio credit: **Author**
 - Summary scope: disaggregated inference and the infrastructure behind AI agents
 
+### Podcast: What's Up with Tech?
+
+- Title: **How Enterprise AI Agents Break Budgets And How To Fix It**
+- Source: https://www.youtube.com/watch?v=7vLJW37wEQ8
+- Show: **What's Up with Tech?**; published on Evan Kirstel's YouTube channel
+- Public release date: September 18, 2026, confirmed by the expanded description and YouTube publication metadata; this is not a claim about the recording date
+- Portfolio credit: **Podcast guest**; the episode description explicitly identifies Vasanth Mohan from SambaNova
+- Summary scope: enterprise AI-agent costs, inference hardware, and disaggregated inference, based on the publisher's episode description; no transcript or full-playback review is claimed
+- Preview asset: `assets/presentations/whats-up-with-tech-2026.jpg` (1280 × 720)
+- Image source: the official episode's YouTube `og:image`; stored as an optimized local JPEG with EXIF metadata removed rather than publishing the source URL's query parameters
+- The preview is publisher-provided episode artwork, not a claim that the illustrated person is Vasanth
+- Placement: first in recent Presentations and featured in the existing homepage Selected work row
+
 ### Recorded talk: AI By the Bay
 
 - Display title: **Beyond GPUs: Why AI Agents Need New Hardware**

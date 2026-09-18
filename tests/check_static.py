@@ -17,6 +17,7 @@ EXPECTED_IMAGES = {
     "index.html": ["assets/vasanth-mohan.jpg"],
     "writing.html": [],
     "talks.html": [
+        "assets/presentations/whats-up-with-tech-2026.jpg",
         "https://i.ytimg.com/vi/7klpNFoI6Cs/maxresdefault.jpg",
         "https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg",
         "assets/presentations/awe-2021.jpg",
@@ -37,6 +38,7 @@ EXPECTED_IMAGES = {
 }
 EXPECTED_DECLARED_DIMENSIONS = {
     "assets/vasanth-mohan.jpg": ("800", "800"),
+    "assets/presentations/whats-up-with-tech-2026.jpg": ("1280", "720"),
     "assets/presentations/awe-2021.jpg": ("1280", "720"),
     "assets/presentations/entervr-2019.jpg": ("328", "328"),
     "assets/gallery/raise-summit.jpg": ("800", "600"),
@@ -58,6 +60,7 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://www.youtube.com/watch?v=7vLJW37wEQ8",
     "https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live",
     "https://www.youtube.com/watch?v=7klpNFoI6Cs",
     "https://www.youtube.com/watch?v=ekB2HKu8__M",
@@ -239,6 +242,25 @@ def main() -> int:
 
     actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
     checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
+    recent_presentations = re.findall(r'<article class="talk-entry"[^>]*>.*?</article>', html_by_page["talks.html"], re.DOTALL)
+    podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
+    checks.check(
+        len(recent_presentations) == 3 and all(value in recent_presentations[0] for value in (
+            'id="whats-up-with-tech-2026"',
+            'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
+            'src="assets/presentations/whats-up-with-tech-2026.jpg"',
+            'loading="lazy"',
+            "Podcast guest", "What's Up with Tech?", "Evan Kirstel", podcast_title,
+            'datetime="2026-09-18"',
+        )),
+        "the new podcast leads Presentations with its verified title, guest credit, date, and thumbnail",
+    )
+    checks.check(
+        'href="talks.html#whats-up-with-tech-2026"' in html_by_page["index.html"]
+        and podcast_title in html_by_page["index.html"]
+        and html_by_page["index.html"].count('class="selection-title"') == 3,
+        "the existing homepage index features the new podcast without adding another section",
+    )
     archive_previews = re.findall(
         r'<li class="archive-item talk-entry"[^>]*>.*?</li>', html_by_page["talks.html"], re.DOTALL
     )
