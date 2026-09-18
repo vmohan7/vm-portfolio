@@ -12,7 +12,7 @@ const status = { textContent: "" };
 const heading = { textContent: "Short bio" };
 const bio = {
   textContent: "Vasanth Mohan leads developer relations and product marketing at SambaNova.",
-  closest: () => ({ querySelector: () => heading }),
+  closest: () => ({ querySelector: (selector) => selector === "h3" ? heading : null }),
 };
 const button = {
   dataset: { copyTarget: "short-bio" },

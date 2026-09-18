@@ -92,7 +92,7 @@ class PortfolioParser(HTMLParser):
         self.link_elements: list[dict[str, str]] = []
         self.copy_targets: list[str] = []
         self.live_regions: list[dict[str, str]] = []
-        self.bio_h4_count = 0
+        self.bio_h3_count = 0
         self.stack: list[tuple[str, set[str]]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -109,8 +109,8 @@ class PortfolioParser(HTMLParser):
             self.images.append(data)
         elif tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
             self.heading_levels.append(int(tag[1]))
-            if tag == "h4" and any("bio-block" in ancestor_classes for _, ancestor_classes in self.stack):
-                self.bio_h4_count += 1
+            if tag == "h3" and any("bio-block" in ancestor_classes for _, ancestor_classes in self.stack):
+                self.bio_h3_count += 1
         elif tag == "script":
             self.scripts.append(data)
         elif tag == "link":
@@ -225,7 +225,7 @@ def main() -> int:
     checks.check(not unresolved_fragments, "same-page and cross-page fragments resolve")
     checks.check(
         all(
-            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=4"]
+            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=5"]
             for parser in parsers.values()
         ),
         "all five pages use the versioned shared stylesheet",
@@ -361,13 +361,20 @@ def main() -> int:
         about.copy_targets == ["short-bio", "full-bio"] and all(not parsers[name].copy_targets for name in PAGE_NAMES if name != "about.html"),
         "copy controls are present only for the two About-page bios",
     )
-    checks.check(set(about.copy_targets).issubset(about.ids) and about.bio_h4_count == 2, "each copy control targets a bio-block with its h4 label")
+    checks.check(set(about.copy_targets).issubset(about.ids) and about.bio_h3_count == 2, "each copy control targets a bio-block with its h3 label")
+    checks.check(
+        'class="page-label"' not in combined_html
+        and 'class="bio-group-title"' not in combined_html
+        and 'id="profile-title"' not in html_by_page["about.html"]
+        and "A short index" not in combined_html,
+        "decorative eyebrow labels and redundant biography headings are removed",
+    )
     checks.check(
         len(about.live_regions) == 1 and about.live_regions[0].get("aria-live") == "polite",
         "copy feedback has one polite live region on About",
     )
     checks.check(
-        [data.get("src", "") for data in about.scripts if data.get("src")] == ["script.js"]
+        [data.get("src", "") for data in about.scripts if data.get("src")] == ["script.js?v=2"]
         and all(not [data.get("src", "") for data in parsers[name].scripts if data.get("src")] for name in PAGE_NAMES if name != "about.html"),
         "the copy script loads only where the controls exist",
     )
@@ -396,6 +403,12 @@ def main() -> int:
 
     css = CSS_PATH.read_text(encoding="utf-8")
     js = JS_PATH.read_text(encoding="utf-8")
+    checks.check(
+        set(re.findall(r"font-family:\s*([^;]+);", css)) == {"var(--serif)"}
+        and "--sans" not in css
+        and '"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif' in css,
+        "all site text uses the main section's existing serif font family",
+    )
     checks.check("prefers-reduced-motion" in css and ":focus-visible" in css, "CSS includes reduced-motion and visible-focus treatments")
     checks.check(
         bool(re.search(r"\.cover-preview img\s*\{[^}]*object-fit:\s*contain\b", css))

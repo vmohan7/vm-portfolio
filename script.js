@@ -62,7 +62,7 @@
       const copied = await copyText(target.textContent.trim());
       announce(
         button,
-        copied ? `${target.closest(".bio-block").querySelector("h4").textContent.trim()} copied to clipboard.` : "Copy failed. Select the bio text and copy it manually.",
+        copied ? `${target.closest(".bio-block").querySelector("h3").textContent.trim()} copied to clipboard.` : "Copy failed. Select the bio text and copy it manually.",
         copied
       );
     });
