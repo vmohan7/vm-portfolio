@@ -60,6 +60,9 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://www.linkedin.com/feed/update/urn:li:activity:7506750675796733952/",
+    "https://x.com/EvanKirstel/status/2100984986874888450",
+    "https://www.buzzsprout.com/2228835/episodes/19826653-how-enterprise-ai-agents-break-budgets-and-how-to-fix-it",
     "https://www.youtube.com/watch?v=7vLJW37wEQ8",
     "https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live",
     "https://www.youtube.com/watch?v=7klpNFoI6Cs",
@@ -254,6 +257,26 @@ def main() -> int:
             'datetime="2026-09-18"',
         )),
         "the new podcast leads Presentations with its verified title, guest credit, date, and thumbnail",
+    )
+    episode_links_group = re.search(
+        r'<div class="profile-links" role="group" aria-label="Episode links">(.*?)</div>',
+        recent_presentations[0], re.DOTALL,
+    )
+    episode_links = [
+        (href, unescape(re.sub(r"<[^>]+>", "", text)).replace("↗", "").strip())
+        for href, text in re.findall(
+            r'<a\b[^>]*href="([^"]+)"[^>]*>(.*?)</a>',
+            episode_links_group.group(1) if episode_links_group else "", re.DOTALL,
+        )
+    ]
+    checks.check(
+        episode_links == [
+            ("https://www.youtube.com/watch?v=7vLJW37wEQ8", "YouTube"),
+            ("https://www.linkedin.com/feed/update/urn:li:activity:7506750675796733952/", "LinkedIn"),
+            ("https://x.com/EvanKirstel/status/2100984986874888450", "X / Twitter"),
+            ("https://www.buzzsprout.com/2228835/episodes/19826653-how-enterprise-ai-agents-break-budgets-and-how-to-fix-it", "Listen"),
+        ],
+        "the podcast entry links to the exact episode on each platform, not personal profiles",
     )
     checks.check(
         'href="talks.html#whats-up-with-tech-2026"' in html_by_page["index.html"]

@@ -43,6 +43,11 @@ Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & 
 - Image source: the official episode's YouTube `og:image`; stored as an optimized local JPEG with EXIF metadata removed rather than publishing the source URL's query parameters
 - The preview is publisher-provided episode artwork, not a claim that the illustrated person is Vasanth
 - Placement: first in recent Presentations and featured in the existing homepage Selected work row
+- Additional episode destinations, not host or guest profile pages:
+  - LinkedIn: https://www.linkedin.com/feed/update/urn:li:activity:7506750675796733952/ — Evan Kirstel's original post names Vasanth and embeds the exact episode title. The post body was verified in the publisher's activity feed; direct navigation redirects to the matching LinkedIn event theater. Full playback was not verified.
+  - X / Twitter: https://x.com/EvanKirstel/status/2100984986874888450 — the publisher's September 18, 2026 post carries the exact episode title and tags SambaNova.
+  - Audio: https://www.buzzsprout.com/2228835/episodes/19826653-how-enterprise-ai-agents-break-budgets-and-how-to-fix-it — official episode page with the same title, release date, guest description, and a 28:19 audio player.
+- Explicit YouTube, LinkedIn, X / Twitter, and Listen actions sit under this episode's description. Personal profile links elsewhere on the site are unchanged.
 
 ### Recorded talk: AI By the Bay
 
