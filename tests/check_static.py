@@ -64,6 +64,12 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://luma.com/ai-builders-san-jose",
+    "https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg",
+    "https://www.linkedin.com/posts/sambanova_happening-now-its-a-full-house-at-our-hq-activity-7508713949685669888-YpFU",
+    "https://www.linkedin.com/posts/daytonaio_were-bringing-daytona-ai-builders-to-san-activity-7504289733158760450-tCDL",
+    "https://www.linkedin.com/posts/daytonaio_san-jose-showed-up-last-nights-daytona-activity-7508934575268724736-FFG6",
+    "https://www.linkedin.com/posts/ingle-abhi_its-alway-exhilarating-to-host-builders-activity-7509051502699794433-q_S7",
     "https://www.youtube.com/watch?v=zrAEfTV6B5U",
     "https://open.spotify.com/episode/5SpsC92AbQtAvqbDaW5i5I",
     "https://podcasts.apple.com/us/podcast/why-ai-is-about-to-get-much-faster-vasanth-mohan-sambanova/id1782807907?i=1000789825071",
@@ -257,7 +263,7 @@ def main() -> int:
     code_story = "The Enterprise AI Chip War: Rethinking LLM Silicon &amp; Inference"
     code_story_url = "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/"
     checks.check(
-        len(recent_presentations) == 5 and all(value in recent_presentations[0] for value in (
+        len(recent_presentations) == 6 and all(value in recent_presentations[0] for value in (
             'id="code-story-2026"', f'href="{code_story_url}"',
             'src="assets/presentations/code-story-2026.jpg"',
             'loading="lazy"', 'Podcast guest', 'Code Story',
@@ -265,9 +271,36 @@ def main() -> int:
         )),
         "the verified Code Story podcast leads the recent presentations",
     )
+    daytona = recent_presentations[1] if len(recent_presentations) > 1 else ""
+    checks.check(
+        all(value in daytona for value in (
+            'id="daytona-ai-builders-2026"', 'Speaker', 'Daytona &amp; SambaNova AI Builders',
+            'Fast Tokens, More Responsive Agents', 'datetime="2026-09-23"',
+            'href="https://luma.com/ai-builders-san-jose"',
+        )),
+        "the official Daytona agenda grounds the exact event, talk title, speaker credit, and date",
+    )
+    event_links_group = re.search(
+        r'<div class="profile-links" role="group" aria-label="LinkedIn posts about the event">(.*?)</div>',
+        daytona, re.DOTALL,
+    )
+    event_links = [href for href in re.findall(
+        r'<a\b[^>]*href="([^"]+)"[^>]*>',
+        event_links_group.group(1) if event_links_group else "",
+    )]
+    checks.check(
+        event_links == [
+            "https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg",
+            "https://www.linkedin.com/posts/sambanova_happening-now-its-a-full-house-at-our-hq-activity-7508713949685669888-YpFU",
+            "https://www.linkedin.com/posts/daytonaio_were-bringing-daytona-ai-builders-to-san-activity-7504289733158760450-tCDL",
+            "https://www.linkedin.com/posts/daytonaio_san-jose-showed-up-last-nights-daytona-activity-7508934575268724736-FFG6",
+            "https://www.linkedin.com/posts/ingle-abhi_its-alway-exhilarating-to-host-builders-activity-7509051502699794433-q_S7",
+        ],
+        "the event links to five distinct, verified Vasanth, SambaNova, and organizer/team posts",
+    )
     podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
     checks.check(
-        len(recent_presentations) == 5 and all(value in recent_presentations[1] for value in (
+        len(recent_presentations) == 6 and all(value in recent_presentations[2] for value in (
             'id="whats-up-with-tech-2026"',
             'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
             'src="assets/presentations/whats-up-with-tech-2026.jpg"',
@@ -279,7 +312,7 @@ def main() -> int:
     )
     episode_links_group = re.search(
         r'<div class="profile-links" role="group" aria-label="Episode links">(.*?)</div>',
-        recent_presentations[1], re.DOTALL,
+        recent_presentations[2], re.DOTALL,
     )
     episode_links = [
         (href, unescape(re.sub(r"<[^>]+>", "", text)).replace("↗", "").strip())
@@ -297,7 +330,7 @@ def main() -> int:
         ],
         "the podcast entry links to the exact episode on each platform, not personal profiles",
     )
-    docsie_episode = recent_presentations[2] if len(recent_presentations) > 2 else ""
+    docsie_episode = recent_presentations[3] if len(recent_presentations) > 3 else ""
     checks.check(
         all(part in docsie_episode for part in (
             'id="so-what-about-ai-agents-2026"',
@@ -491,7 +524,15 @@ def main() -> int:
         r"(?<!\d)-\d{9,}(?!\d)",
         r"(?:api|auth|bot)[_-]?(?:key|token)\s*[:=]",
     ]
-    checks.check(not any(re.search(pattern, public_text, re.IGNORECASE) for pattern in sensitive_patterns), "public text excludes path, identifier, and secret-shaped data")
+    # Public LinkedIn post URLs contain long activity IDs; exclude URL bodies from
+    # the standalone-identifier check while still scanning all text for paths/secrets.
+    text_without_urls = re.sub(r"https?://[^\s<>\"')]+", "", public_text)
+    checks.check(
+        not re.search(sensitive_patterns[0], public_text, re.IGNORECASE)
+        and not re.search(sensitive_patterns[1], text_without_urls, re.IGNORECASE)
+        and not re.search(sensitive_patterns[2], public_text, re.IGNORECASE),
+        "public text excludes path, identifier, and secret-shaped data",
+    )
 
     css = CSS_PATH.read_text(encoding="utf-8")
     js = JS_PATH.read_text(encoding="utf-8")

@@ -43,6 +43,19 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 - Episode artwork: `assets/presentations/code-story-2026.jpg` (800 × 800), optimized from the official episode's `og:image`: https://media.redcircle.com/images/2026/8/28/17/46df0bb8-fff3-4196-8513-27fd19cb3404_vashant_sq2.jpg . The publisher associates the art with this episode; no person is identified from image appearance.
 - Placement: first in recent Presentations and featured in the existing homepage Selected work row.
 
+### Talk: Daytona & SambaNova AI Builders — San Jose
+
+- Official agenda: https://luma.com/ai-builders-san-jose — the September 23, 2026 event in San Jose, hosted by Daytona and SambaNova. It explicitly lists Vasanth Mohan as speaker of **Fast Tokens, More Responsive Agents** at 5:50–6:05 p.m. The agenda's historical job title is not used as a current title on the site.
+- Talk summary is paraphrased from the official agenda: prefill on GPUs, fast decoding on RDUs, and orchestration/tool calls on CPUs to reduce agent-loop latency. No recording is claimed.
+- LinkedIn posts read individually and linked directly, not inferred from a search-results title:
+  - Vasanth's own recap and photos: https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg — identifies the first SambaNova developer meetup in the San Jose office and thanks speakers and Daytona, You.com, and WeAreDevelopers.
+  - SambaNova's live event photo post: https://www.linkedin.com/posts/sambanova_happening-now-its-a-full-house-at-our-hq-activity-7508713949685669888-YpFU — explicitly names Vasanth, the speakers, and partners at AI Builders in San Jose.
+  - Daytona's speaker announcement: https://www.linkedin.com/posts/daytonaio_were-bringing-daytona-ai-builders-to-san-activity-7504289733158760450-tCDL — names Vasanth and SambaNova in the lineup.
+  - Daytona's photo recap: https://www.linkedin.com/posts/daytonaio_san-jose-showed-up-last-nights-daytona-activity-7508934575268724736-FFG6 — explicitly calls it the Daytona & SambaNova AI Builders event in San Jose.
+  - Abhi Ingle's team recap: https://www.linkedin.com/posts/ingle-abhi_its-alway-exhilarating-to-host-builders-activity-7509051502699794433-q_S7 — adds personal event commentary and quotes the SambaNova post; not represented as a distinct photo set.
+- Related attendee/conference posts without specific evidence about Vasanth's session are omitted. The text-only preview uses the agenda's event name, organizers, and date rather than republishing an inaccessible or unlicensed event image.
+- Placement: second in recent Presentations, after September 24 Code Story and before September 18 What's Up with Tech?.
+
 ### Podcast: What's Up with Tech?
 
 - Title: **How Enterprise AI Agents Break Budgets And How To Fix It**
