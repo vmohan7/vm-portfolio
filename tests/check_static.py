@@ -252,6 +252,18 @@ def main() -> int:
         ),
         "all five pages use the versioned shared stylesheet",
     )
+    canonical_domain = "https://www.vasanthmohan.com/"
+    checks.check(
+        (ROOT / "CNAME").read_text(encoding="utf-8").strip() == "www.vasanthmohan.com"
+        and all(
+            f'<link rel="canonical" href="{canonical_domain}{"" if name == "index.html" else name}">' in html
+            and f'<meta property="og:url" content="{canonical_domain}{"" if name == "index.html" else name}">' in html
+            and "vmohan7.github.io/vm-portfolio" not in html
+            for name, html in html_by_page.items()
+        )
+        and f'"url": "{canonical_domain}"' in html_by_page["index.html"],
+        "canonical, sharing, and Person URLs use the live www domain on every page",
+    )
 
     external_links = [data for parser in parsers.values() for href, data in parser.hrefs if href.startswith(("http://", "https://"))]
     checks.check(

@@ -2,6 +2,8 @@
 
 This file records the public evidence behind the portfolio and the rules for adding material. It is deliberately limited to publishable information.
 
+Public site: https://www.vasanthmohan.com/ . The repository `CNAME` names the `www` host; the apex and former GitHub Pages project address redirect there. Canonical and sharing URLs use the live `www` address.
+
 ## Current profile links
 
 | Label | URL | Use |

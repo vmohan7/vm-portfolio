@@ -38,13 +38,13 @@ node --check script.js
 node tests/check_copy.js
 ```
 
-The site uses relative paths for local assets, so it works from the `/vm-portfolio/` GitHub Pages project path.
+The site uses relative paths for local assets. The public domain is `https://www.vasanthmohan.com/`; the original GitHub Pages project URL redirects to it.
 
 ## Publish with GitHub Pages
 
-In this repository’s **Settings → Pages**, select **Deploy from a branch**, choose **main** and **/ (root)**, and save. Once GitHub completes the first deployment, the site’s address is `https://vmohan7.github.io/vm-portfolio/`.
+GitHub Pages deploys from **main** and **/ (root)**. The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address.
 
-Subsequent pushes to `main` update the same site. There are no deployment secrets or custom build workflows to maintain. The address is a deployment target, not proof that Pages has been enabled; verify the actual page after setup.
+Subsequent pushes to `main` update the same site. There are no deployment secrets or custom build workflows to maintain. A commit is not deployment proof; verify the published pages after each update.
 
 ## Add or update public work
 
