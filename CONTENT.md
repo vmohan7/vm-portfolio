@@ -31,6 +31,18 @@ Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & 
 - Portfolio credit: **Author**
 - Summary scope: disaggregated inference and the infrastructure behind AI agents
 
+### Podcast: Code Story
+
+- Display title: **The Enterprise AI Chip War: Rethinking LLM Silicon & Inference**
+- Official episode: https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/
+- Additional publisher page: https://news.codestory.co/p/the-enterprise-ai-chip-war-rethinking
+- Public release date: September 24, 2026, per the official episode page; not a recording date
+- Portfolio credit: **Podcast guest**, with Noah Labhart hosting, as stated on the official episode page
+- Summary scope: the episode's published notes and transcript discuss agentic workloads, inference latency, disaggregated inference, and infrastructure decisions. The whole audio was not reviewed.
+- The publisher's headline calls Vasanth “Director of Product”; the episode body and his verified profile describe developer relations and product marketing. The portfolio omits that conflicting title and uses only the verified guest credit.
+- Episode artwork: `assets/presentations/code-story-2026.jpg` (800 × 800), optimized from the official episode's `og:image`: https://media.redcircle.com/images/2026/8/28/17/46df0bb8-fff3-4196-8513-27fd19cb3404_vashant_sq2.jpg . The publisher associates the art with this episode; no person is identified from image appearance.
+- Placement: first in recent Presentations and featured in the existing homepage Selected work row.
+
 ### Podcast: What's Up with Tech?
 
 - Title: **How Enterprise AI Agents Break Budgets And How To Fix It**
@@ -42,7 +54,7 @@ Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & 
 - Preview asset: `assets/presentations/whats-up-with-tech-2026.jpg` (1280 × 720)
 - Image source: the official episode's YouTube `og:image`; stored as an optimized local JPEG with EXIF metadata removed rather than publishing the source URL's query parameters
 - The preview is publisher-provided episode artwork, not a claim that the illustrated person is Vasanth
-- Placement: first in recent Presentations and featured in the existing homepage Selected work row
+- Placement: second in recent Presentations; previously featured in the homepage Selected work row
 - Additional episode destinations, not host or guest profile pages:
   - LinkedIn: https://www.linkedin.com/feed/update/urn:li:activity:7506750675796733952/ — Evan Kirstel's original post names Vasanth and embeds the exact episode title. The post body was verified in the publisher's activity feed; direct navigation redirects to the matching LinkedIn event theater. Full playback was not verified.
   - X / Twitter: https://x.com/EvanKirstel/status/2100984986874888450 — the publisher's September 18, 2026 post carries the exact episode title and tags SambaNova.

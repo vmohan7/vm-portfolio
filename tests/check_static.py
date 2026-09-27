@@ -17,6 +17,7 @@ EXPECTED_IMAGES = {
     "index.html": ["assets/vasanth-mohan.jpg"],
     "writing.html": [],
     "talks.html": [
+        "assets/presentations/code-story-2026.jpg",
         "assets/presentations/whats-up-with-tech-2026.jpg",
         "https://i.ytimg.com/vi/7klpNFoI6Cs/maxresdefault.jpg",
         "https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg",
@@ -38,6 +39,7 @@ EXPECTED_IMAGES = {
 }
 EXPECTED_DECLARED_DIMENSIONS = {
     "assets/vasanth-mohan.jpg": ("800", "800"),
+    "assets/presentations/code-story-2026.jpg": ("800", "800"),
     "assets/presentations/whats-up-with-tech-2026.jpg": ("1280", "720"),
     "assets/presentations/awe-2021.jpg": ("1280", "720"),
     "assets/presentations/entervr-2019.jpg": ("328", "328"),
@@ -60,6 +62,7 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/",
     "https://www.linkedin.com/feed/update/urn:li:activity:7506750675796733952/",
     "https://x.com/EvanKirstel/status/2100984986874888450",
     "https://www.buzzsprout.com/2228835/episodes/19826653-how-enterprise-ai-agents-break-budgets-and-how-to-fix-it",
@@ -246,9 +249,20 @@ def main() -> int:
     actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
     checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
     recent_presentations = re.findall(r'<article class="talk-entry"[^>]*>.*?</article>', html_by_page["talks.html"], re.DOTALL)
+    code_story = "The Enterprise AI Chip War: Rethinking LLM Silicon &amp; Inference"
+    code_story_url = "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/"
+    checks.check(
+        len(recent_presentations) == 4 and all(value in recent_presentations[0] for value in (
+            'id="code-story-2026"', f'href="{code_story_url}"',
+            'src="assets/presentations/code-story-2026.jpg"',
+            'loading="lazy"', 'Podcast guest', 'Code Story',
+            'datetime="2026-09-24"', code_story,
+        )),
+        "the verified Code Story podcast leads the recent presentations",
+    )
     podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
     checks.check(
-        len(recent_presentations) == 3 and all(value in recent_presentations[0] for value in (
+        len(recent_presentations) == 4 and all(value in recent_presentations[1] for value in (
             'id="whats-up-with-tech-2026"',
             'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
             'src="assets/presentations/whats-up-with-tech-2026.jpg"',
@@ -260,7 +274,7 @@ def main() -> int:
     )
     episode_links_group = re.search(
         r'<div class="profile-links" role="group" aria-label="Episode links">(.*?)</div>',
-        recent_presentations[0], re.DOTALL,
+        recent_presentations[1], re.DOTALL,
     )
     episode_links = [
         (href, unescape(re.sub(r"<[^>]+>", "", text)).replace("↗", "").strip())
@@ -279,10 +293,10 @@ def main() -> int:
         "the podcast entry links to the exact episode on each platform, not personal profiles",
     )
     checks.check(
-        'href="talks.html#whats-up-with-tech-2026"' in html_by_page["index.html"]
-        and podcast_title in html_by_page["index.html"]
+        'href="talks.html#code-story-2026"' in html_by_page["index.html"]
+        and code_story in html_by_page["index.html"]
         and html_by_page["index.html"].count('class="selection-title"') == 3,
-        "the existing homepage index features the new podcast without adding another section",
+        "the existing homepage index features the newest podcast without adding another section",
     )
     archive_previews = re.findall(
         r'<li class="archive-item talk-entry"[^>]*>.*?</li>', html_by_page["talks.html"], re.DOTALL
