@@ -18,9 +18,12 @@ def urls_from(path: Path) -> list[str]:
 
 
 with tempfile.TemporaryDirectory(prefix="site-build-", dir=ROOT) as temp:
-    assert not (ROOT / "robots.txt").exists() and not (ROOT / "sitemap.xml").exists(), "crawl files belong in the generated artifact only"
     stage = Path(temp) / "output"
     urls = build(ROOT, stage)
+    assert all(
+        (ROOT / name).is_file() and (ROOT / name).read_bytes() == (stage / name).read_bytes()
+        for name in ("robots.txt", "sitemap.xml")
+    ), "branch Pages and Actions artifacts must serve identical crawl files until Pages source is switched"
     assert urls == urls_from(stage / "sitemap.xml")
     assert len(urls) == len(list(ROOT.glob("*.html")))
     assert urls[0] == BASE and len(urls) == len(set(urls))

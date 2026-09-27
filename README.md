@@ -16,7 +16,7 @@ A fast, accessible, static portfolio of selected writing, presentations, and pub
 - `tests/check_navigation.py` — focused five-page navigation contract
 - `tests/check_static.py` — dependency-free cross-page and content-integrity checks
 - `.nojekyll` — serves the site unchanged on GitHub Pages
-- `robots.txt` and `sitemap.xml` — generated crawl guidance in the deployed artifact (not hand-edited source files)
+- `robots.txt` and `sitemap.xml` — generated crawl guidance also committed as branch-Pages fallbacks until the Pages source is switched
 - `scripts/build_site.py` — generates a clean deploy artifact and crawl files from root HTML pages
 - `.github/workflows/pages.yml` — checks and publishes the generated artifact on each `main` push
 
@@ -46,9 +46,11 @@ The site uses relative paths for local assets. The public domain is `https://www
 
 ## Publish with GitHub Pages
 
-The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address. GitHub Pages is served by the **Build and publish portfolio** Actions workflow: its first build and deploy succeeded, and the live sitemap matched the generated artifact.
+The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address. **Pages is currently configured to deploy from the `main` branch.** Its built-in `pages build and deployment` job runs alongside **Build and publish portfolio** and may publish *after* the custom Actions job; a successful Actions run does not prove that its artifact is the final live site.
 
-For every `main` push, the runner validates content, builds `_site`, generates a sitemap from all root HTML pages with correct canonical URLs and a robots file pointing to it, and deploys the artifact using the standard Pages actions. There is no bot commit, secret, dependency install, or manual sitemap edit per page change. A successful commit or build alone is not deployment proof—verify the deployment job and public URLs.
+**One-time owner action for fully automatic publishing:** In this repository’s **Settings → Pages → Build and deployment → Source**, select **GitHub Actions** instead of **Deploy from a branch**. Then verify a fresh push has only the intended Actions deployment and check the uncached sitemap and robots responses. Until that setting is changed, both the generated artifact and the branch must include identical crawl files; `tests/check_build.py` enforces byte-for-byte parity. When adding a new page before switching, regenerate the checked-in copies from the build output and commit them. Do not remove those copies merely because the custom Actions job reports success.
+
+On every `main` push, the custom runner validates content, builds `_site`, generates a sitemap from canonical root HTML pages and a robots file pointing to it, and deploys the artifact using standard Pages actions. After the source switch, the branch copies may be removed in a separately verified change, leaving no manual sitemap upkeep. A successful commit or build alone is not deployment proof—verify the final public URLs after *both* deployment jobs finish.
 
 ## Search discovery
 
