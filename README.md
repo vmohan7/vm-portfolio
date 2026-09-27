@@ -17,8 +17,10 @@ A fast, accessible, static portfolio of selected writing, presentations, and pub
 - `tests/check_static.py` — dependency-free cross-page and content-integrity checks
 - `.nojekyll` — serves the site unchanged on GitHub Pages
 - `robots.txt` and `sitemap.xml` — public crawl guidance and the five canonical page URLs
+- `scripts/build_site.py` — generates a clean deploy artifact and crawl files from root HTML pages
+- `.github/workflows/pages.yml` — checks and publishes the generated artifact on each `main` push
 
-There is no build step, package manager, framework, CMS, or runtime dependency.
+There is no framework, package manager, CMS, or runtime dependency. The Pages runner only copies static files and generates crawl files with Python's standard library.
 
 ## Preview locally
 
@@ -35,6 +37,7 @@ Then open `http://localhost:8000/`. Each root HTML page also loads directly, for
 ```sh
 python3 tests/check_navigation.py
 python3 tests/check_static.py
+python3 tests/check_build.py
 node --check script.js
 node tests/check_copy.js
 ```
@@ -43,13 +46,13 @@ The site uses relative paths for local assets. The public domain is `https://www
 
 ## Publish with GitHub Pages
 
-GitHub Pages deploys from **main** and **/ (root)**. The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address.
+The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address. **One-time activation:** in this repository’s **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions** instead of **Deploy from a branch**. Then rerun **Build and publish portfolio** (or push another change) and confirm the `deploy` job succeeds and the live domain still serves the site. Do not remove the existing branch deployment before the Actions deploy is verified. Access to that owner-only setting is required; simply committing the workflow does not change the Pages source.
 
-Subsequent pushes to `main` update the same site. There are no deployment secrets or custom build workflows to maintain. A commit is not deployment proof; verify the published pages after each update.
+For every `main` push, the runner validates content, builds `_site`, generates a sitemap from all root HTML pages with correct canonical URLs and a robots file pointing to it, and deploys the artifact using the standard Pages actions. There is no bot commit, secret, dependency install, or manual sitemap edit per page change. The checked-in crawl files remain as fallbacks while branch deployment is active; the runner regenerates them in the deployed artifact. A successful commit or build alone is not deployment proof—verify the deployment job and public URLs.
 
 ## Search discovery
 
-The five HTML pages have distinct titles, descriptions, self-referencing canonical URLs on the `www` domain, and normal crawlable links. The root sitemap lists only these five pages; it omits `lastmod` rather than guessing dates. The root robots file permits crawling and advertises the sitemap. Check the **live** versions of both files after deployment, including any rules added by the domain's proxy.
+The five current HTML pages have distinct titles, descriptions, self-referencing canonical URLs on the `www` domain, and normal crawlable links. The generated root sitemap discovers pages automatically and omits `lastmod` rather than guessing dates. The generated robots file permits crawling and advertises the sitemap. Check the **live** versions of both files after deployment, including any rules added by the domain's proxy.
 
 For indexing diagnostics, the domain owner should verify `vasanthmohan.com` in [Google Search Console](https://search.google.com/search-console/), submit `https://www.vasanthmohan.com/sitemap.xml`, and inspect the homepage and key page URLs there. DNS/domain-property verification may require action in the DNS provider. A valid sitemap and crawlable pages help discovery but do not guarantee inclusion or ranking; only Search Console can show Google's indexing decisions for this property.
 
