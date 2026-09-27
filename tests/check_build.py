@@ -18,6 +18,7 @@ def urls_from(path: Path) -> list[str]:
 
 
 with tempfile.TemporaryDirectory(prefix="site-build-", dir=ROOT) as temp:
+    assert not (ROOT / "robots.txt").exists() and not (ROOT / "sitemap.xml").exists(), "crawl files belong in the generated artifact only"
     stage = Path(temp) / "output"
     urls = build(ROOT, stage)
     assert urls == urls_from(stage / "sitemap.xml")

@@ -16,7 +16,7 @@ A fast, accessible, static portfolio of selected writing, presentations, and pub
 - `tests/check_navigation.py` — focused five-page navigation contract
 - `tests/check_static.py` — dependency-free cross-page and content-integrity checks
 - `.nojekyll` — serves the site unchanged on GitHub Pages
-- `robots.txt` and `sitemap.xml` — public crawl guidance and the five canonical page URLs
+- `robots.txt` and `sitemap.xml` — generated crawl guidance in the deployed artifact (not hand-edited source files)
 - `scripts/build_site.py` — generates a clean deploy artifact and crawl files from root HTML pages
 - `.github/workflows/pages.yml` — checks and publishes the generated artifact on each `main` push
 
@@ -46,9 +46,9 @@ The site uses relative paths for local assets. The public domain is `https://www
 
 ## Publish with GitHub Pages
 
-The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address. **One-time activation:** in this repository’s **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions** instead of **Deploy from a branch**. Then rerun **Build and publish portfolio** (or push another change) and confirm the `deploy` job succeeds and the live domain still serves the site. Do not remove the existing branch deployment before the Actions deploy is verified. Access to that owner-only setting is required; simply committing the workflow does not change the Pages source.
+The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address. GitHub Pages is served by the **Build and publish portfolio** Actions workflow: its first build and deploy succeeded, and the live sitemap matched the generated artifact.
 
-For every `main` push, the runner validates content, builds `_site`, generates a sitemap from all root HTML pages with correct canonical URLs and a robots file pointing to it, and deploys the artifact using the standard Pages actions. There is no bot commit, secret, dependency install, or manual sitemap edit per page change. The checked-in crawl files remain as fallbacks while branch deployment is active; the runner regenerates them in the deployed artifact. A successful commit or build alone is not deployment proof—verify the deployment job and public URLs.
+For every `main` push, the runner validates content, builds `_site`, generates a sitemap from all root HTML pages with correct canonical URLs and a robots file pointing to it, and deploys the artifact using the standard Pages actions. There is no bot commit, secret, dependency install, or manual sitemap edit per page change. A successful commit or build alone is not deployment proof—verify the deployment job and public URLs.
 
 ## Search discovery
 

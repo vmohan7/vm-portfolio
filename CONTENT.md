@@ -4,8 +4,7 @@ This file records the public evidence behind the portfolio and the rules for add
 
 Public site: https://www.vasanthmohan.com/ . The repository `CNAME` names the `www` host; the apex and former GitHub Pages project address redirect there. Canonical and sharing URLs use the live `www` address.
 
-The root `sitemap.xml` lists the five selected-work HTML pages, without unverified modification dates. The root `robots.txt` advertises that sitemap and allows general crawling; proxy-injected directives must be checked on the published URL. Indexing and search ranking are not inferred from these site-side settings.
-The Pages Actions workflow regenerates both crawl files from validated root HTML pages in its deployment artifact. The checked-in copies are fallbacks for the branch-based Pages source until the one-time switch to GitHub Actions is verified; future public HTML pages do not require manually editing the generated sitemap.
+The Pages Actions workflow generates the root `sitemap.xml` from validated HTML pages without unverified modification dates and a `robots.txt` that allows crawling and advertises that sitemap. The first Actions deployment succeeded and the live sitemap matched the generated artifact. Both files exist only in the deployment artifact, not as hand-edited source copies; future public HTML pages do not require manually editing the sitemap. Proxy-injected directives must be checked on the published URL, and indexing or ranking cannot be inferred from these site-side settings.
 
 ## Current profile links
 
