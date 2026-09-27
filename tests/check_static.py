@@ -484,14 +484,16 @@ def main() -> int:
     full_bio_match = re.search(r'<p id="full-bio">(.*?)</p>', html_by_page["about.html"], re.DOTALL)
     full_bio_text = unescape(re.sub(r"<[^>]+>", "", full_bio_match.group(1))).strip() if full_bio_match else ""
     checks.check(
-        200 <= len(full_bio_text.split()) <= 350
-        and len(full_bio_text.split("\n\n")) == 4
+        130 <= len(full_bio_text.split()) <= 195
+        and len(full_bio_text.split("\n\n")) == 3
+        and full_bio_text.startswith("Vasanth Mohan is Senior Director of Technical Product Marketing and Developer Relations at SambaNova.")
         and all(topic in full_bio_text for topic in (
-            "SambaNova", "MobiledgeX", "FusedVR", "Unity", "SteamVR",
+            "agentic AI", "coding agents", "inference", "GPUs", "RDUs",
+            "MobiledgeX", "FusedVR", "Unity", "SteamVR",
             "Creating Augmented and Virtual Realities", "Erin Pangilinan", "Steve Lukas",
             "AI By the Bay", "Hacking Agents", "AWE USA", "EnterVR",
         )),
-        "the full bio covers the verified career in four copyable paragraphs",
+        "the punchier full bio retains verified AI and earlier-work credits in three copyable paragraphs",
     )
 
     prohibited_copy = ("forthcoming", "credits will appear", "no stock", "official gtc", "main-stage", "main stage")
