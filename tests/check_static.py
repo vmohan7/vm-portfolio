@@ -382,21 +382,35 @@ def main() -> int:
         "gallery retains the original conservative event captions",
     )
     checks.check(
-        "Head of Dev Rel &amp; Product Marketing" in combined_html and "San Jose, California" in combined_html,
+        "Senior Director, Product Marketing and Developer Relations at SambaNova" in combined_html
+        and "San Jose, California" in combined_html
+        and "Head of Dev Rel" not in combined_html
+        and "Head of Developer Relations" not in combined_html,
         "profile role and location match the verified LinkedIn wording",
     )
-    linkedin_headline = "Head of Dev Rel & Product Marketing @ SambaNova | Agentic AI, Fast & Energy-Efficient Inference, Sovereign AI"
-    short_versions = [
+    linkedin_headline = "Senior Director, Product Marketing and Developer Relations at SambaNova"
+    headline_versions = [
         re.search(pattern, html_by_page[page])
         for page, pattern in (
             ("index.html", r'<p class="page-lede">([^<]+)</p>'),
             ("about.html", r'<p class="about-lead">([^<]+)</p>'),
-            ("about.html", r'<p id="short-bio">([^<]+)</p>'),
         )
     ]
     checks.check(
-        all(match and unescape(match.group(1)).strip() == linkedin_headline for match in short_versions),
-        "the short bio and page introductions use the LinkedIn headline verbatim",
+        all(match and unescape(match.group(1)).strip() == linkedin_headline for match in headline_versions),
+        "the page introductions use the current LinkedIn headline verbatim",
+    )
+    linkedin_about = (
+        "Vasanth Mohan serves as Senior Director of Technical Product Marketing and Developer Relations at SambaNova. "
+        "In previous roles, he has worked with thousands of developers to empower them to build the best scalable solutions "
+        "across many emerging technologies, including VR/AR, Edge Computing, and AI. "
+        "At SambaNova, he is now focused on enabling developers and enterprises to unlock the value of Agentic AI "
+        "with Fast Inference on SambaCloud to solve today's business challenges quickly and efficiently."
+    )
+    short_bio_match = re.search(r'<p id="short-bio">([^<]+)</p>', html_by_page["about.html"])
+    checks.check(
+        bool(short_bio_match and unescape(short_bio_match.group(1)).strip() == linkedin_about),
+        "the copyable short bio matches Vasanth's supplied LinkedIn About screenshot verbatim",
     )
     full_bio_match = re.search(r'<p id="full-bio">(.*?)</p>', html_by_page["about.html"], re.DOTALL)
     full_bio_text = unescape(re.sub(r"<[^>]+>", "", full_bio_match.group(1))).strip() if full_bio_match else ""

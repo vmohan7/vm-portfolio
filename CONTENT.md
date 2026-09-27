@@ -9,14 +9,14 @@ This file records the public evidence behind the portfolio and the rules for add
 | LinkedIn | https://www.linkedin.com/in/v-mohan | Public profile link |
 | GitHub | https://github.com/vmohan7 | Public profile link |
 
-Current public positioning used on the site: Vasanth Mohan is Head of Dev Rel & Product Marketing at SambaNova and is based in San Jose, California. Focus areas are agentic AI, coding agents, fast and energy-efficient inference, sovereign AI, AI infrastructure, enterprise adoption, developer communities, and technical storytelling.
+Current public positioning used on the site: Vasanth Mohan's LinkedIn headline identifies him as Senior Director, Product Marketing and Developer Relations at SambaNova; his About description calls the role Senior Director of Technical Product Marketing and Developer Relations. He is based in San Jose, California. Focus areas are agentic AI, coding agents, fast and energy-efficient inference, sovereign AI, AI infrastructure, enterprise adoption, developer communities, and technical storytelling.
 
 ## Published selections
 
 ### Biography wording
 
-- The homepage introduction, About-page introduction, and copyable short bio use the exact LinkedIn headline: **Head of Dev Rel & Product Marketing @ SambaNova | Agentic AI, Fast & Energy-Efficient Inference, Sovereign AI**.
-- This is the profile headline, not an invented third-person summary or a claim to reproduce LinkedIn's About section. Source: https://www.linkedin.com/in/v-mohan
+- The homepage and About-page introduction use the LinkedIn headline: **Senior Director, Product Marketing and Developer Relations at SambaNova**. The copyable short bio instead reproduces the three-sentence LinkedIn **About** text verbatim, including its own more specific title, "Technical Product Marketing." Source: https://www.linkedin.com/in/v-mohan
+- About prose was transcribed from a screenshot supplied by Vasanth in the portfolio conversation. The image itself is private and is not committed or published. Browser profile output had loaded only the headline and Activity sections, which is why a direct DOM read did not capture the About card. Claims such as the developer count and SambaCloud focus are attributed to Vasanth's own About copy, not independently measured.
 - The full bio is original, third-person copy covering the current AI work and the earlier edge-computing and immersive-technology work. Paragraph breaks are preserved in the copied text.
 - The historical MobiledgeX role and prototype-to-production developer-support description come from the official AWE USA 2021 speaker biography: https://www.awexr.com/usa-2021/speaker/2796-vasanth-mohan
 - Inference topics are grounded in the SambaNova bylined article and recorded talks below. AR/VR and 5G topics are grounded in the AWE panel record. FusedVR teaching, O'Reilly co-authorship with Erin Pangilinan and Steve Lukas, and the EnterVR appearance are grounded in the original sources below.
