@@ -53,7 +53,8 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
   - Daytona's speaker announcement: https://www.linkedin.com/posts/daytonaio_were-bringing-daytona-ai-builders-to-san-activity-7504289733158760450-tCDL — names Vasanth and SambaNova in the lineup.
   - Daytona's photo recap: https://www.linkedin.com/posts/daytonaio_san-jose-showed-up-last-nights-daytona-activity-7508934575268724736-FFG6 — explicitly calls it the Daytona & SambaNova AI Builders event in San Jose.
   - Abhi Ingle's team recap: https://www.linkedin.com/posts/ingle-abhi_its-alway-exhilarating-to-host-builders-activity-7509051502699794433-q_S7 — adds personal event commentary and quotes the SambaNova post; not represented as a distinct photo set.
-- Related attendee/conference posts without specific evidence about Vasanth's session are omitted. The text-only preview uses the agenda's event name, organizers, and date rather than republishing an inaccessible or unlicensed event image.
+- Related attendee/conference posts without specific evidence about Vasanth's session are omitted.
+- Preview asset: `assets/presentations/daytona-ai-builders-2026.jpg` (800 × 800), derived from the official Luma page's square event cover at https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=800,height=800/uploads/cd/b87ac315-a74c-41d0-8631-94b0d35f55a7.png . The source image was viewed on the event page and saved as an optimized local JPEG without metadata after Vasanth requested the image. It is linked to the event agenda and is not treated as a photograph of the speaker or a talk recording.
 - Placement: second in recent Presentations, after September 24 Code Story and before September 18 What's Up with Tech?.
 
 ### Podcast: What's Up with Tech?

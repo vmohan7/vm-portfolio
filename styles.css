@@ -281,22 +281,11 @@ h2 {
   object-position: center;
   background: var(--paper-deep);
 }
-.event-preview {
-  min-height: 17rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: clamp(1.4rem, 4vw, 2.4rem);
-  border: 1px solid var(--line);
-  background: var(--paper-deep);
-  text-decoration: none;
+.event-artwork img {
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: #080808;
 }
-.event-preview:hover { border-color: var(--accent-dark); }
-.event-preview-hosts,
-.event-preview-foot { font-size: .95rem; color: var(--muted); }
-.event-preview-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; letter-spacing: -.035em; }
-.event-preview-foot { display: flex; justify-content: space-between; }
 .related-links-heading { margin: 1.25rem 0 -.85rem; font-size: .95rem; color: var(--muted); }
 .play-label {
   position: absolute;

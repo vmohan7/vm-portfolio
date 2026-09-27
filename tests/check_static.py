@@ -18,6 +18,7 @@ EXPECTED_IMAGES = {
     "writing.html": [],
     "talks.html": [
         "assets/presentations/code-story-2026.jpg",
+        "assets/presentations/daytona-ai-builders-2026.jpg",
         "assets/presentations/whats-up-with-tech-2026.jpg",
         "assets/presentations/so-what-about-ai-agents-2026.jpg",
         "https://i.ytimg.com/vi/7klpNFoI6Cs/maxresdefault.jpg",
@@ -41,6 +42,7 @@ EXPECTED_IMAGES = {
 EXPECTED_DECLARED_DIMENSIONS = {
     "assets/vasanth-mohan.jpg": ("800", "800"),
     "assets/presentations/code-story-2026.jpg": ("800", "800"),
+    "assets/presentations/daytona-ai-builders-2026.jpg": ("800", "800"),
     "assets/presentations/so-what-about-ai-agents-2026.jpg": ("1280", "720"),
     "assets/presentations/whats-up-with-tech-2026.jpg": ("1280", "720"),
     "assets/presentations/awe-2021.jpg": ("1280", "720"),
@@ -277,8 +279,11 @@ def main() -> int:
             'id="daytona-ai-builders-2026"', 'Speaker', 'Daytona &amp; SambaNova AI Builders',
             'Fast Tokens, More Responsive Agents', 'datetime="2026-09-23"',
             'href="https://luma.com/ai-builders-san-jose"',
+            'class="video-preview event-artwork"',
+            'src="assets/presentations/daytona-ai-builders-2026.jpg"',
+            'width="800" height="800"', 'loading="lazy"',
         )),
-        "the official Daytona agenda grounds the exact event, talk title, speaker credit, and date",
+        "the official Daytona agenda grounds the talk, date, and linked event-cover image",
     )
     event_links_group = re.search(
         r'<div class="profile-links" role="group" aria-label="LinkedIn posts about the event">(.*?)</div>',
