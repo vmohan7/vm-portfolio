@@ -19,6 +19,7 @@ EXPECTED_IMAGES = {
     "talks.html": [
         "assets/presentations/code-story-2026.jpg",
         "assets/presentations/whats-up-with-tech-2026.jpg",
+        "assets/presentations/so-what-about-ai-agents-2026.jpg",
         "https://i.ytimg.com/vi/7klpNFoI6Cs/maxresdefault.jpg",
         "https://i.ytimg.com/vi/ekB2HKu8__M/maxresdefault.jpg",
         "assets/presentations/awe-2021.jpg",
@@ -40,6 +41,7 @@ EXPECTED_IMAGES = {
 EXPECTED_DECLARED_DIMENSIONS = {
     "assets/vasanth-mohan.jpg": ("800", "800"),
     "assets/presentations/code-story-2026.jpg": ("800", "800"),
+    "assets/presentations/so-what-about-ai-agents-2026.jpg": ("1280", "720"),
     "assets/presentations/whats-up-with-tech-2026.jpg": ("1280", "720"),
     "assets/presentations/awe-2021.jpg": ("1280", "720"),
     "assets/presentations/entervr-2019.jpg": ("328", "328"),
@@ -62,6 +64,9 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://www.youtube.com/watch?v=zrAEfTV6B5U",
+    "https://open.spotify.com/episode/5SpsC92AbQtAvqbDaW5i5I",
+    "https://podcasts.apple.com/us/podcast/why-ai-is-about-to-get-much-faster-vasanth-mohan-sambanova/id1782807907?i=1000789825071",
     "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/",
     "https://www.linkedin.com/feed/update/urn:li:activity:7506750675796733952/",
     "https://x.com/EvanKirstel/status/2100984986874888450",
@@ -252,7 +257,7 @@ def main() -> int:
     code_story = "The Enterprise AI Chip War: Rethinking LLM Silicon &amp; Inference"
     code_story_url = "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/"
     checks.check(
-        len(recent_presentations) == 4 and all(value in recent_presentations[0] for value in (
+        len(recent_presentations) == 5 and all(value in recent_presentations[0] for value in (
             'id="code-story-2026"', f'href="{code_story_url}"',
             'src="assets/presentations/code-story-2026.jpg"',
             'loading="lazy"', 'Podcast guest', 'Code Story',
@@ -262,7 +267,7 @@ def main() -> int:
     )
     podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
     checks.check(
-        len(recent_presentations) == 4 and all(value in recent_presentations[1] for value in (
+        len(recent_presentations) == 5 and all(value in recent_presentations[1] for value in (
             'id="whats-up-with-tech-2026"',
             'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
             'src="assets/presentations/whats-up-with-tech-2026.jpg"',
@@ -291,6 +296,20 @@ def main() -> int:
             ("https://www.buzzsprout.com/2228835/episodes/19826653-how-enterprise-ai-agents-break-budgets-and-how-to-fix-it", "Listen"),
         ],
         "the podcast entry links to the exact episode on each platform, not personal profiles",
+    )
+    docsie_episode = recent_presentations[2] if len(recent_presentations) > 2 else ""
+    checks.check(
+        all(part in docsie_episode for part in (
+            'id="so-what-about-ai-agents-2026"',
+            'src="assets/presentations/so-what-about-ai-agents-2026.jpg"',
+            'loading="lazy"', 'Why AI Is About to Get MUCH Faster',
+            'So What About AI Agents', 'Philippe Trounev', 'Podcast guest',
+            'datetime="2026-09-15"',
+            'href="https://www.youtube.com/watch?v=zrAEfTV6B5U"',
+            'href="https://open.spotify.com/episode/5SpsC92AbQtAvqbDaW5i5I"',
+            'href="https://podcasts.apple.com/us/podcast/why-ai-is-about-to-get-much-faster-vasanth-mohan-sambanova/id1782807907?i=1000789825071"',
+        )),
+        "the Docsie episode has its verified title, date, guest and host credits, artwork, and exact platform links",
     )
     checks.check(
         'href="talks.html#code-story-2026"' in html_by_page["index.html"]

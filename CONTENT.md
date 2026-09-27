@@ -61,6 +61,17 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
   - Audio: https://www.buzzsprout.com/2228835/episodes/19826653-how-enterprise-ai-agents-break-budgets-and-how-to-fix-it — official episode page with the same title, release date, guest description, and a 28:19 audio player.
 - Explicit YouTube, LinkedIn, X / Twitter, and Listen actions sit under this episode's description. Personal profile links elsewhere on the site are unchanged.
 
+### Podcast: So What About AI Agents
+
+- Display title: **Why AI Is About to Get MUCH Faster**
+- Recording: https://www.youtube.com/watch?v=zrAEfTV6B5U — published by **So What About AI Agents by Docsie**; video title includes Vasanth Mohan and SambaNova
+- Official episode links: https://open.spotify.com/episode/5SpsC92AbQtAvqbDaW5i5I and https://podcasts.apple.com/us/podcast/why-ai-is-about-to-get-much-faster-vasanth-mohan-sambanova/id1782807907?i=1000789825071 . These are the matching episode pages, not show homepages.
+- Public release date: September 15, 2026, per YouTube publication metadata and Apple Podcasts (not a recording date)
+- Credit: **Podcast guest**; Apple’s episode description identifies Philippe Trounev as the interviewer and Vasanth Mohan of SambaNova as the guest. The host surname is spelled **Trounev** by the publisher.
+- Summary scope: agentic-workflow latency, inference speed, prefill and decode, and hardware tradeoffs. No transcript/full-playback review or hardware performance claim is made in the displayed summary.
+- Preview asset: `assets/presentations/so-what-about-ai-agents-2026.jpg` (1280 × 720), optimized from the official video `og:image` at https://i.ytimg.com/vi/zrAEfTV6B5U/maxresdefault.jpg with metadata removed. The artwork is linked as a video preview, not reused as a gallery photograph or proof of production credit.
+- Placement: third in recent Presentations, below the September 24 Code Story and September 18 What's Up with Tech? appearances.
+
 ### Recorded talk: AI By the Bay
 
 - Display title: **Beyond GPUs: Why AI Agents Need New Hardware**
