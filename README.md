@@ -16,6 +16,7 @@ A fast, accessible, static portfolio of selected writing, presentations, and pub
 - `tests/check_navigation.py` — focused five-page navigation contract
 - `tests/check_static.py` — dependency-free cross-page and content-integrity checks
 - `.nojekyll` — serves the site unchanged on GitHub Pages
+- `robots.txt` and `sitemap.xml` — public crawl guidance and the five canonical page URLs
 
 There is no build step, package manager, framework, CMS, or runtime dependency.
 
@@ -45,6 +46,12 @@ The site uses relative paths for local assets. The public domain is `https://www
 GitHub Pages deploys from **main** and **/ (root)**. The repository’s `CNAME` names `www.vasanthmohan.com`. The apex domain and original GitHub Pages project URL redirect to the `www` address.
 
 Subsequent pushes to `main` update the same site. There are no deployment secrets or custom build workflows to maintain. A commit is not deployment proof; verify the published pages after each update.
+
+## Search discovery
+
+The five HTML pages have distinct titles, descriptions, self-referencing canonical URLs on the `www` domain, and normal crawlable links. The root sitemap lists only these five pages; it omits `lastmod` rather than guessing dates. The root robots file permits crawling and advertises the sitemap. Check the **live** versions of both files after deployment, including any rules added by the domain's proxy.
+
+For indexing diagnostics, the domain owner should verify `vasanthmohan.com` in [Google Search Console](https://search.google.com/search-console/), submit `https://www.vasanthmohan.com/sitemap.xml`, and inspect the homepage and key page URLs there. DNS/domain-property verification may require action in the DNS provider. A valid sitemap and crawlable pages help discovery but do not guarantee inclusion or ranking; only Search Console can show Google's indexing decisions for this property.
 
 ## Add or update public work
 

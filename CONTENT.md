@@ -4,6 +4,8 @@ This file records the public evidence behind the portfolio and the rules for add
 
 Public site: https://www.vasanthmohan.com/ . The repository `CNAME` names the `www` host; the apex and former GitHub Pages project address redirect there. Canonical and sharing URLs use the live `www` address.
 
+The root `sitemap.xml` lists the five selected-work HTML pages, without unverified modification dates. The root `robots.txt` advertises that sitemap and allows general crawling; proxy-injected directives must be checked on the published URL. Indexing and search ranking are not inferred from these site-side settings.
+
 ## Current profile links
 
 | Label | URL | Use |

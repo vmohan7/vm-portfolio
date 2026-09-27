@@ -8,6 +8,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 import re
 import sys
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE_NAMES = ("index.html", "writing.html", "talks.html", "gallery.html", "about.html")
@@ -263,6 +264,25 @@ def main() -> int:
         )
         and f'"url": "{canonical_domain}"' in html_by_page["index.html"],
         "canonical, sharing, and Person URLs use the live www domain on every page",
+    )
+    sitemap_path = ROOT / "sitemap.xml"
+    sitemap_urls: list[str] = []
+    if sitemap_path.is_file():
+        try:
+            sitemap = ET.parse(sitemap_path).getroot()
+            namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+            sitemap_urls = [node.text or "" for node in sitemap.findall(f"{namespace}url/{namespace}loc")]
+        except ET.ParseError:
+            pass
+    canonical_urls = [canonical_domain + ("" if name == "index.html" else name) for name in PAGE_NAMES]
+    checks.check(sitemap_urls == canonical_urls, "sitemap lists each canonical public page exactly once")
+    robots_path = ROOT / "robots.txt"
+    robots = robots_path.read_text(encoding="utf-8") if robots_path.is_file() else ""
+    checks.check(
+        "User-agent: *\nAllow: /" in robots
+        and "Sitemap: https://www.vasanthmohan.com/sitemap.xml" in robots
+        and not re.search(r"(?im)^\s*(?:Disallow:\s*/|Noindex:)\s*$", robots),
+        "robots file permits crawling and advertises the canonical sitemap",
     )
 
     external_links = [data for parser in parsers.values() for href, data in parser.hrefs if href.startswith(("http://", "https://"))]
