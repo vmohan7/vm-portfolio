@@ -484,16 +484,15 @@ def main() -> int:
     full_bio_match = re.search(r'<p id="full-bio">(.*?)</p>', html_by_page["about.html"], re.DOTALL)
     full_bio_text = unescape(re.sub(r"<[^>]+>", "", full_bio_match.group(1))).strip() if full_bio_match else ""
     checks.check(
-        130 <= len(full_bio_text.split()) <= 195
+        115 <= len(full_bio_text.split()) <= 190
         and len(full_bio_text.split("\n\n")) == 3
-        and full_bio_text.startswith("Vasanth Mohan is Senior Director of Technical Product Marketing and Developer Relations at SambaNova.")
+        and full_bio_text.find("FusedVR") < full_bio_text.find("MobiledgeX") < full_bio_text.find("SambaNova")
         and all(topic in full_bio_text for topic in (
-            "agentic AI", "coding agents", "inference", "GPUs", "RDUs",
-            "MobiledgeX", "FusedVR", "Unity", "SteamVR",
-            "Creating Augmented and Virtual Realities", "Erin Pangilinan", "Steve Lukas",
-            "AI By the Bay", "Hacking Agents", "AWE USA", "EnterVR",
-        )),
-        "the punchier full bio retains verified AI and earlier-work credits in three copyable paragraphs",
+            "Unity", "SteamVR", "Creating Augmented and Virtual Realities",
+            "telecom edge", "5G", "agentic AI", "coding agents", "inference",
+        ))
+        and not any(event in full_bio_text for event in ("AI By the Bay", "Hacking Agents", "AWE USA", "EnterVR")),
+        "the copyable long bio traces VR to telecom edge to AI without event references",
     )
 
     prohibited_copy = ("forthcoming", "credits will appear", "no stock", "official gtc", "main-stage", "main stage")
