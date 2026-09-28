@@ -27,6 +27,8 @@ EXPECTED_IMAGES = {
         "assets/presentations/entervr-2019.jpg",
     ],
     "gallery.html": [
+        "assets/gallery/daytona-ai-builders-talk.jpg",
+        "assets/gallery/daytona-ai-builders-room.jpg",
         "assets/gallery/raise-summit.jpg",
         "assets/gallery/ai-infra-summit.jpg",
         "assets/gallery/gtc-community.jpg",
@@ -47,6 +49,8 @@ EXPECTED_DECLARED_DIMENSIONS = {
     "assets/presentations/whats-up-with-tech-2026.jpg": ("1280", "720"),
     "assets/presentations/awe-2021.jpg": ("1280", "720"),
     "assets/presentations/entervr-2019.jpg": ("328", "328"),
+    "assets/gallery/daytona-ai-builders-talk.jpg": ("800", "533"),
+    "assets/gallery/daytona-ai-builders-room.jpg": ("800", "533"),
     "assets/gallery/raise-summit.jpg": ("800", "600"),
     "assets/gallery/ai-infra-summit.jpg": ("800", "600"),
     "assets/gallery/gtc-community.jpg": ("800", "600"),
@@ -387,7 +391,7 @@ def main() -> int:
     )
     gallery_figures = re.findall(r"<figure\b[^>]*>.*?</figure>", html_by_page["gallery.html"], re.DOTALL)
     checks.check(
-        len(gallery_figures) == 9 and all(
+        len(gallery_figures) == 11 and all(
             sum(
                 f'src="assets/gallery/{name}.jpg"' in figure
                 and f'https://www.linkedin.com/feed/update/urn:li:activity:{activity}/' in figure
@@ -396,7 +400,17 @@ def main() -> int:
             ) == 1
             for name, activity in ADDITIONAL_GALLERY_SOURCES.items()
         ),
-        "nine gallery photographs retain their own source links and new images load lazily",
+        "eleven gallery photographs retain their own source links and new images load lazily",
+    )
+    daytona_source = "https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg"
+    checks.check(
+        all(
+            f'src="assets/gallery/daytona-ai-builders-{name}.jpg"' in figure
+            and daytona_source in figure
+            and 'loading="lazy"' in figure
+            for name, figure in zip(("talk", "room"), gallery_figures[:2])
+        ),
+        "Daytona event photographs lead the gallery and link to Vasanth's original recap",
     )
     checks.check(
         all(

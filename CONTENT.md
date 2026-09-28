@@ -165,7 +165,14 @@ Earlier work stays below the recent selections and carries its original date. Th
 
 The local photographs below are selected from Vasanth Mohan’s own public LinkedIn presence and are included in this portfolio at the owner’s request. The event captions intentionally make no claim about a speaking role or exact date.
 
-The selected images were visually checked against their source posts. The portrait is 800 × 800; eight event photos are 800 × 600 and the Step SF photo is 800 × 533. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The nine-image gallery keeps the recent selections first and follows with earlier event highlights; all images load lazily.
+The selected images were visually checked against their source posts. The portrait is 800 × 800; eight earlier event photos are 800 × 600 and the Step SF photo is 800 × 533. The two Daytona meetup photographs are 800 × 533. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The eleven-image gallery keeps the recent selections first and follows with earlier event highlights; all images load lazily.
+
+### Daytona & SambaNova AI Builders — San Jose
+
+- Assets: `assets/gallery/daytona-ai-builders-talk.jpg` and `assets/gallery/daytona-ai-builders-room.jpg` (both 800 × 533)
+- Source and public-use request: Vasanth's own photo recap at https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg ; Vasanth specifically requested these event photos for his public gallery.
+- Visible scenes: a presenter with a microphone beside an inference slide and Daytona banner (first image), and attendees in a meetup room with laptops (third image). The gallery does not infer the presenter's identity or a separate speaking credit from the photographs.
+- The source images were opened at 1280 × 853 and saved as optimized, metadata-free local JPEGs. The official event poster remains a Presentations preview, not a gallery photograph.
 
 ### Portrait
 
