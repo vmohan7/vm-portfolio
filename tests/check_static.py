@@ -28,7 +28,6 @@ EXPECTED_IMAGES = {
     ],
     "gallery.html": [
         "assets/gallery/daytona-ai-builders-talk.jpg",
-        "assets/gallery/daytona-ai-builders-room.jpg",
         "assets/gallery/raise-summit.jpg",
         "assets/gallery/ai-infra-summit.jpg",
         "assets/gallery/gtc-community.jpg",
@@ -36,7 +35,9 @@ EXPECTED_IMAGES = {
         "assets/gallery/crewai-signals.jpg",
         "assets/gallery/step-sf.jpg",
         "assets/gallery/llamacon.jpg",
+        "assets/gallery/ai-agents-meetup.jpg",
         "assets/gallery/hackutd.jpg",
+        "assets/gallery/builders-founders-meetup.jpg",
         "assets/gallery/austin-meetup.jpg",
     ],
     "about.html": ["assets/vasanth-mohan.jpg"],
@@ -50,7 +51,6 @@ EXPECTED_DECLARED_DIMENSIONS = {
     "assets/presentations/awe-2021.jpg": ("1280", "720"),
     "assets/presentations/entervr-2019.jpg": ("328", "328"),
     "assets/gallery/daytona-ai-builders-talk.jpg": ("800", "533"),
-    "assets/gallery/daytona-ai-builders-room.jpg": ("800", "533"),
     "assets/gallery/raise-summit.jpg": ("800", "600"),
     "assets/gallery/ai-infra-summit.jpg": ("800", "600"),
     "assets/gallery/gtc-community.jpg": ("800", "600"),
@@ -58,7 +58,9 @@ EXPECTED_DECLARED_DIMENSIONS = {
     "assets/gallery/crewai-signals.jpg": ("800", "600"),
     "assets/gallery/step-sf.jpg": ("800", "533"),
     "assets/gallery/llamacon.jpg": ("800", "600"),
+    "assets/gallery/ai-agents-meetup.jpg": ("800", "534"),
     "assets/gallery/hackutd.jpg": ("800", "600"),
+    "assets/gallery/builders-founders-meetup.jpg": ("800", "600"),
     "assets/gallery/austin-meetup.jpg": ("800", "600"),
 }
 ADDITIONAL_GALLERY_SOURCES = {
@@ -391,7 +393,7 @@ def main() -> int:
     )
     gallery_figures = re.findall(r"<figure\b[^>]*>.*?</figure>", html_by_page["gallery.html"], re.DOTALL)
     checks.check(
-        len(gallery_figures) == 11 and all(
+        len(gallery_figures) == 12 and all(
             sum(
                 f'src="assets/gallery/{name}.jpg"' in figure
                 and f'https://www.linkedin.com/feed/update/urn:li:activity:{activity}/' in figure
@@ -400,17 +402,28 @@ def main() -> int:
             ) == 1
             for name, activity in ADDITIONAL_GALLERY_SOURCES.items()
         ),
-        "eleven gallery photographs retain their own source links and new images load lazily",
+        "twelve gallery photographs retain their own source links and new images load lazily",
     )
     daytona_source = "https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg"
     checks.check(
+        f'src="assets/gallery/daytona-ai-builders-talk.jpg"' in gallery_figures[0]
+        and daytona_source in gallery_figures[0]
+        and 'loading="lazy"' in gallery_figures[0]
+        and 'View on LinkedIn' in gallery_figures[0]
+        and gallery_figures[0].count('assets/gallery/daytona-ai-builders-') == 1
+        and not any('assets/gallery/daytona-ai-builders-room.jpg' in figure for figure in gallery_figures),
+        "one Daytona event photo leads the gallery with a concise LinkedIn source link",
+    )
+    checks.check(
         all(
-            f'src="assets/gallery/daytona-ai-builders-{name}.jpg"' in figure
-            and daytona_source in figure
-            and 'loading="lazy"' in figure
-            for name, figure in zip(("talk", "room"), gallery_figures[:2])
-        ),
-        "Daytona event photographs lead the gallery and link to Vasanth's original recap",
+            sum(f'src="assets/gallery/{name}.jpg"' in figure and url in figure and 'loading="lazy"' in figure
+                for figure in gallery_figures) == 1
+            for name, url in (
+                ("ai-agents-meetup", "https://www.linkedin.com/posts/v-mohan_incredible-ai-agents-meetup-in-our-office-activity-7308894743264997377-0MsG"),
+                ("builders-founders-meetup", "https://www.linkedin.com/posts/v-mohan_we-just-kicked-off-our-first-ai-agents-builders-activity-7262539734206296065-CPEF"),
+            )
+        ) and not any('Vasanth’s photo recap on LinkedIn' in figure for figure in gallery_figures),
+        "older SambaNova meetup photographs each link to their original LinkedIn post",
     )
     checks.check(
         all(

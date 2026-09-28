@@ -165,14 +165,14 @@ Earlier work stays below the recent selections and carries its original date. Th
 
 The local photographs below are selected from Vasanth Mohan’s own public LinkedIn presence and are included in this portfolio at the owner’s request. The event captions intentionally make no claim about a speaking role or exact date.
 
-The selected images were visually checked against their source posts. The portrait is 800 × 800; eight earlier event photos are 800 × 600 and the Step SF photo is 800 × 533. The two Daytona meetup photographs are 800 × 533. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The eleven-image gallery keeps the recent selections first and follows with earlier event highlights; all images load lazily.
+The selected images were visually checked against their source posts. The portrait is 800 × 800; nine event photos are 800 × 600, the Daytona and Step SF photos are 800 × 533, and the AI Agents meetup photo is 800 × 534. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The twelve-image gallery keeps recent selections first and follows with earlier event highlights; all images load lazily.
 
 ### Daytona & SambaNova AI Builders — San Jose
 
-- Assets: `assets/gallery/daytona-ai-builders-talk.jpg` and `assets/gallery/daytona-ai-builders-room.jpg` (both 800 × 533)
-- Source and public-use request: Vasanth's own photo recap at https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg ; Vasanth specifically requested these event photos for his public gallery.
-- Visible scenes: a presenter with a microphone beside an inference slide and Daytona banner (first image), and attendees in a meetup room with laptops (third image). The gallery does not infer the presenter's identity or a separate speaking credit from the photographs.
-- The source images were opened at 1280 × 853 and saved as optimized, metadata-free local JPEGs. The official event poster remains a Presentations preview, not a gallery photograph.
+- Asset: `assets/gallery/daytona-ai-builders-talk.jpg` (800 × 533)
+- Source and public-use request: Vasanth's own photo recap at https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg ; Vasanth requested one event photo for his public gallery. The source link is labeled simply “View on LinkedIn.”
+- Visible scene: a presenter with a microphone beside an inference slide and Daytona banner (first image). The gallery does not infer the presenter's identity or a separate speaking credit from the photograph.
+- The source image was opened at 1280 × 853 and saved as an optimized, metadata-free local JPEG. The official event poster remains a Presentations preview, not a gallery photograph.
 
 ### Portrait
 
@@ -231,12 +231,28 @@ The selected images were visually checked against their source posts. The portra
 - Caption scope: attendance with the SambaNova team as LlamaCon begins; no speaking role claimed
 - Visible scene: three attendees taking a selfie in front of the stage and audience (first image in the source post)
 
+### AI Agents meetup
+
+- Asset: `assets/gallery/ai-agents-meetup.jpg` (800 × 534), optimized from the first photograph in Vasanth's own public post and saved without EXIF metadata
+- Source post: https://www.linkedin.com/posts/v-mohan_incredible-ai-agents-meetup-in-our-office-activity-7308894743264997377-0MsG
+- Caption scope: an office meetup with presentations and demos about agents, inference, trust and security; no specific speaking role or location is inferred
+- Visible scene: five attendees standing together in front of blue event screens; identities are not inferred from appearance
+- Included at Vasanth's request to showcase earlier SambaNova events from his LinkedIn history
+
 ### HackUTD
 
 - Asset: `assets/gallery/hackutd.jpg`
 - Source post: https://www.linkedin.com/feed/update/urn:li:activity:7264755844301352960/
 - Caption scope: exploring projects built with SambaNova at the UTD hackathon; no audience counts or awards are claimed in the gallery
 - Visible scene: developers gathered around a laptop and hardware project (fourth image in the source post)
+
+### AI Agents Builders & Founders meetup
+
+- Asset: `assets/gallery/builders-founders-meetup.jpg` (800 × 600), optimized from the first photograph in Vasanth's own public post and saved without EXIF metadata
+- Source post: https://www.linkedin.com/posts/v-mohan_we-just-kicked-off-our-first-ai-agents-builders-activity-7262539734206296065-CPEF
+- Caption scope: Vasanth describes an early Builders and Founders gathering for companies building AI applications; no attendee identities or performance numbers inferred
+- Visible scene: three people taking a selfie at an indoor meetup; identities are not inferred from appearance
+- Included at Vasanth's request to showcase earlier SambaNova events from his LinkedIn history
 
 ### Austin developer meetup
 
