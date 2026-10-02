@@ -35,6 +35,17 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 - Portfolio credit: **Author**
 - Summary scope: disaggregated inference and the infrastructure behind AI agents
 
+### Talk: The AI Conference 2026
+
+- Display title: **Premium Inference for the Agentic AI Era**
+- Official session: https://agenda.aiconference.com/?session=10d6a43c-96d6-4e44-94c8-47cac67ccb83
+- Official agenda confirms October 1, 2026, 4:00–4:25 p.m. Pacific, Theater 2, AI Builders track, San Francisco. Vasanth Mohan and Jason Goodison (CTO, General Compute) are listed on stage.
+- Portfolio credit: **Speaker**; described as a discussion, not a solo talk, hosted interview, or production credit.
+- Summary paraphrases the session abstract on inference latency and responsive multi-step agents. No recording or benchmark claim is made.
+- Vasanth's public photo recap: https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/ — explicitly describes the AI Conference discussion with Jason Goodison and infrastructure from chips to agents.
+- Photograph: `assets/gallery/ai-conference-2026.jpg` (800 × 600), optimized from the first photo in the recap's image viewer (1280 × 960); EXIF removed. Visible scene: two attendees beside the branded conference stage. Identities are not inferred from facial appearance.
+- Placement: newest Presentations entry and one photograph at the top of Gallery, with “View on LinkedIn” source labeling. Reuses one local asset across both pages; not a video preview or official poster.
+
 ### Podcast: Code Story
 
 - Display title: **The Enterprise AI Chip War: Rethinking LLM Silicon & Inference**
@@ -165,7 +176,7 @@ Earlier work stays below the recent selections and carries its original date. Th
 
 The local photographs below are selected from Vasanth Mohan’s own public LinkedIn presence and are included in this portfolio at the owner’s request. The event captions intentionally make no claim about a speaking role or exact date.
 
-The selected images were visually checked against their source posts. The portrait is 800 × 800; nine event photos are 800 × 600, the Daytona and Step SF photos are 800 × 533, and the AI Agents meetup photo is 800 × 534. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The twelve-image gallery keeps recent selections first and follows with earlier event highlights; all images load lazily.
+The selected images were visually checked against their source posts. The portrait is 800 × 800; ten event photos are 800 × 600, the Daytona and Step SF photos are 800 × 533, and the AI Agents meetup photo is 800 × 534. Optimized local JPEGs retain no EXIF/location metadata and do not depend on expiring LinkedIn CDN URLs. Announcement screenshots, benchmark graphics, and photographs from other people’s reposts were not selected. The thirteen-image gallery keeps recent selections first and follows with earlier event highlights; all images load lazily.
 
 ### Daytona & SambaNova AI Builders — San Jose
 

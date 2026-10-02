@@ -17,6 +17,7 @@ EXPECTED_IMAGES = {
     "index.html": ["assets/vasanth-mohan.jpg"],
     "writing.html": [],
     "talks.html": [
+        "assets/gallery/ai-conference-2026.jpg",
         "assets/presentations/code-story-2026.jpg",
         "assets/presentations/daytona-ai-builders-2026.jpg",
         "assets/presentations/whats-up-with-tech-2026.jpg",
@@ -27,6 +28,7 @@ EXPECTED_IMAGES = {
         "assets/presentations/entervr-2019.jpg",
     ],
     "gallery.html": [
+        "assets/gallery/ai-conference-2026.jpg",
         "assets/gallery/daytona-ai-builders-talk.jpg",
         "assets/gallery/raise-summit.jpg",
         "assets/gallery/ai-infra-summit.jpg",
@@ -43,6 +45,7 @@ EXPECTED_IMAGES = {
     "about.html": ["assets/vasanth-mohan.jpg"],
 }
 EXPECTED_DECLARED_DIMENSIONS = {
+    "assets/gallery/ai-conference-2026.jpg": ("800", "600"),
     "assets/vasanth-mohan.jpg": ("800", "800"),
     "assets/presentations/code-story-2026.jpg": ("800", "800"),
     "assets/presentations/daytona-ai-builders-2026.jpg": ("800", "800"),
@@ -72,6 +75,8 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://agenda.aiconference.com/?session=10d6a43c-96d6-4e44-94c8-47cac67ccb83",
+    "https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/",
     "https://luma.com/ai-builders-san-jose",
     "https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg",
     "https://www.linkedin.com/posts/sambanova_happening-now-its-a-full-house-at-our-hq-activity-7508713949685669888-YpFU",
@@ -280,18 +285,29 @@ def main() -> int:
     actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
     checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
     recent_presentations = re.findall(r'<article class="talk-entry"[^>]*>.*?</article>', html_by_page["talks.html"], re.DOTALL)
+    conference_source = "https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/"
+    checks.check(
+        all(value in recent_presentations[0] for value in (
+            'id="ai-conference-2026"', 'Premium Inference for the Agentic AI Era',
+            'Speaker', 'Jason Goodison', 'datetime="2026-10-01"',
+            'https://agenda.aiconference.com/?session=10d6a43c-96d6-4e44-94c8-47cac67ccb83',
+            conference_source, 'src="assets/gallery/ai-conference-2026.jpg"',
+            'View on LinkedIn',
+        )) and 'Watch' not in recent_presentations[0],
+        "the October 1 conference discussion leads Presentations with official details and a sourced photo, not a recording claim",
+    )
     code_story = "The Enterprise AI Chip War: Rethinking LLM Silicon &amp; Inference"
     code_story_url = "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/"
     checks.check(
-        len(recent_presentations) == 6 and all(value in recent_presentations[0] for value in (
+        len(recent_presentations) == 7 and all(value in recent_presentations[1] for value in (
             'id="code-story-2026"', f'href="{code_story_url}"',
             'src="assets/presentations/code-story-2026.jpg"',
             'loading="lazy"', 'Podcast guest', 'Code Story',
             'datetime="2026-09-24"', code_story,
         )),
-        "the verified Code Story podcast leads the recent presentations",
+        "the verified Code Story podcast follows the newest conference discussion",
     )
-    daytona = recent_presentations[1] if len(recent_presentations) > 1 else ""
+    daytona = recent_presentations[2] if len(recent_presentations) > 2 else ""
     checks.check(
         all(value in daytona for value in (
             'id="daytona-ai-builders-2026"', 'Speaker', 'Daytona &amp; SambaNova AI Builders',
@@ -323,7 +339,7 @@ def main() -> int:
     )
     podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
     checks.check(
-        len(recent_presentations) == 6 and all(value in recent_presentations[2] for value in (
+        len(recent_presentations) == 7 and all(value in recent_presentations[3] for value in (
             'id="whats-up-with-tech-2026"',
             'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
             'src="assets/presentations/whats-up-with-tech-2026.jpg"',
@@ -335,7 +351,7 @@ def main() -> int:
     )
     episode_links_group = re.search(
         r'<div class="profile-links" role="group" aria-label="Episode links">(.*?)</div>',
-        recent_presentations[2], re.DOTALL,
+        recent_presentations[3], re.DOTALL,
     )
     episode_links = [
         (href, unescape(re.sub(r"<[^>]+>", "", text)).replace("↗", "").strip())
@@ -353,7 +369,7 @@ def main() -> int:
         ],
         "the podcast entry links to the exact episode on each platform, not personal profiles",
     )
-    docsie_episode = recent_presentations[3] if len(recent_presentations) > 3 else ""
+    docsie_episode = recent_presentations[4] if len(recent_presentations) > 4 else ""
     checks.check(
         all(part in docsie_episode for part in (
             'id="so-what-about-ai-agents-2026"',
@@ -393,7 +409,14 @@ def main() -> int:
     )
     gallery_figures = re.findall(r"<figure\b[^>]*>.*?</figure>", html_by_page["gallery.html"], re.DOTALL)
     checks.check(
-        len(gallery_figures) == 12 and all(
+        all(value in gallery_figures[0] for value in (
+            'src="assets/gallery/ai-conference-2026.jpg"', conference_source,
+            'loading="lazy"', 'View on LinkedIn',
+        )) and sum('assets/gallery/ai-conference-2026.jpg' in figure for figure in gallery_figures) == 1,
+        "one photo from the new AI Conference recap leads Gallery",
+    )
+    checks.check(
+        len(gallery_figures) == 13 and all(
             sum(
                 f'src="assets/gallery/{name}.jpg"' in figure
                 and f'https://www.linkedin.com/feed/update/urn:li:activity:{activity}/' in figure
@@ -402,17 +425,17 @@ def main() -> int:
             ) == 1
             for name, activity in ADDITIONAL_GALLERY_SOURCES.items()
         ),
-        "twelve gallery photographs retain their own source links and new images load lazily",
+        "thirteen gallery photographs retain their own source links and new images load lazily",
     )
     daytona_source = "https://www.linkedin.com/posts/v-mohan_first-sambanova-developer-meetup-since-we-activity-7508716381841063937-zdbg"
     checks.check(
-        f'src="assets/gallery/daytona-ai-builders-talk.jpg"' in gallery_figures[0]
-        and daytona_source in gallery_figures[0]
-        and 'loading="lazy"' in gallery_figures[0]
-        and 'View on LinkedIn' in gallery_figures[0]
-        and gallery_figures[0].count('assets/gallery/daytona-ai-builders-') == 1
+        f'src="assets/gallery/daytona-ai-builders-talk.jpg"' in gallery_figures[1]
+        and daytona_source in gallery_figures[1]
+        and 'loading="lazy"' in gallery_figures[1]
+        and 'View on LinkedIn' in gallery_figures[1]
+        and gallery_figures[1].count('assets/gallery/daytona-ai-builders-') == 1
         and not any('assets/gallery/daytona-ai-builders-room.jpg' in figure for figure in gallery_figures),
-        "one Daytona event photo leads the gallery with a concise LinkedIn source link",
+        "one Daytona event photo follows the newest conference photo with a concise LinkedIn source link",
     )
     checks.check(
         all(
@@ -472,7 +495,7 @@ def main() -> int:
         "every page retains the verified profile links",
     )
     checks.check("June 3, 2026" in html_by_page["writing.html"] and "AI By the Bay · 2025" in html_by_page["talks.html"], "verified publication and event dates remain attached to their sources")
-    checks.check(not re.search(r"\b20\d{2}\b", html_by_page["gallery.html"]), "gallery copy does not infer event dates")
+    checks.check(not re.search(r"\b20\d{2}\b", re.sub(r"<[^>]+>", "", html_by_page["gallery.html"])), "gallery copy does not infer event dates")
     checks.check(
         all(caption in html_by_page["gallery.html"] for caption in ("RAISE Summit, Paris", "AI Infra Summit", "Developer gatherings around GTC")),
         "gallery retains the original conservative event captions",
