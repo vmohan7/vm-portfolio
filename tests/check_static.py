@@ -18,6 +18,7 @@ EXPECTED_IMAGES = {
     "writing.html": [],
     "talks.html": [
         "assets/gallery/ai-conference-2026.jpg",
+        "assets/presentations/disambiguation-2026.jpg",
         "assets/presentations/code-story-2026.jpg",
         "assets/presentations/daytona-ai-builders-2026.jpg",
         "assets/presentations/whats-up-with-tech-2026.jpg",
@@ -45,6 +46,7 @@ EXPECTED_IMAGES = {
     "about.html": ["assets/vasanth-mohan.jpg"],
 }
 EXPECTED_DECLARED_DIMENSIONS = {
+    "assets/presentations/disambiguation-2026.jpg": ("1280", "720"),
     "assets/gallery/ai-conference-2026.jpg": ("800", "600"),
     "assets/vasanth-mohan.jpg": ("800", "800"),
     "assets/presentations/code-story-2026.jpg": ("800", "800"),
@@ -75,6 +77,7 @@ ADDITIONAL_GALLERY_SOURCES = {
     "austin-meetup": "7247411762680004610",
 }
 REQUIRED_SOURCES = {
+    "https://www.youtube.com/watch?v=YDTazNT1N-E",
     "https://agenda.aiconference.com/?session=10d6a43c-96d6-4e44-94c8-47cac67ccb83",
     "https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/",
     "https://luma.com/ai-builders-san-jose",
@@ -297,9 +300,18 @@ def main() -> int:
         "the October 1 conference discussion leads Presentations with official details and a sourced photo, not a recording claim",
     )
     code_story = "The Enterprise AI Chip War: Rethinking LLM Silicon &amp; Inference"
+    checks.check(
+        all(value in recent_presentations[1] for value in (
+            'id="disambiguation-2026"', 'The Right Chip for the Right Workload: How Inference Speed Shapes the AI Agentic Era',
+            'href="https://www.youtube.com/watch?v=YDTazNT1N-E"', 'Michael Fauscette',
+            'Podcast guest', 'Disambiguation Podcast', 'datetime="2026-09-30"',
+            'src="assets/presentations/disambiguation-2026.jpg"', 'loading="lazy"',
+        )) and 'Stanford' not in recent_presentations[1],
+        "Disambiguation follows the conference with verified episode title, date, guest credit and artwork",
+    )
     code_story_url = "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/"
     checks.check(
-        len(recent_presentations) == 7 and all(value in recent_presentations[1] for value in (
+        len(recent_presentations) == 8 and all(value in recent_presentations[2] for value in (
             'id="code-story-2026"', f'href="{code_story_url}"',
             'src="assets/presentations/code-story-2026.jpg"',
             'loading="lazy"', 'Podcast guest', 'Code Story',
@@ -307,7 +319,7 @@ def main() -> int:
         )),
         "the verified Code Story podcast follows the newest conference discussion",
     )
-    daytona = recent_presentations[2] if len(recent_presentations) > 2 else ""
+    daytona = recent_presentations[3] if len(recent_presentations) > 3 else ""
     checks.check(
         all(value in daytona for value in (
             'id="daytona-ai-builders-2026"', 'Speaker', 'Daytona &amp; SambaNova AI Builders',
@@ -339,7 +351,7 @@ def main() -> int:
     )
     podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
     checks.check(
-        len(recent_presentations) == 7 and all(value in recent_presentations[3] for value in (
+        len(recent_presentations) == 8 and all(value in recent_presentations[4] for value in (
             'id="whats-up-with-tech-2026"',
             'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
             'src="assets/presentations/whats-up-with-tech-2026.jpg"',
@@ -351,7 +363,7 @@ def main() -> int:
     )
     episode_links_group = re.search(
         r'<div class="profile-links" role="group" aria-label="Episode links">(.*?)</div>',
-        recent_presentations[3], re.DOTALL,
+        recent_presentations[4], re.DOTALL,
     )
     episode_links = [
         (href, unescape(re.sub(r"<[^>]+>", "", text)).replace("↗", "").strip())
@@ -369,7 +381,7 @@ def main() -> int:
         ],
         "the podcast entry links to the exact episode on each platform, not personal profiles",
     )
-    docsie_episode = recent_presentations[4] if len(recent_presentations) > 4 else ""
+    docsie_episode = recent_presentations[5] if len(recent_presentations) > 5 else ""
     checks.check(
         all(part in docsie_episode for part in (
             'id="so-what-about-ai-agents-2026"',
@@ -387,7 +399,7 @@ def main() -> int:
         'href="talks.html#code-story-2026"' in html_by_page["index.html"]
         and code_story in html_by_page["index.html"]
         and html_by_page["index.html"].count('class="selection-title"') == 3,
-        "the existing homepage index features the newest podcast without adding another section",
+        "the existing homepage retains its curated Code Story selection without adding another section",
     )
     archive_previews = re.findall(
         r'<li class="archive-item talk-entry"[^>]*>.*?</li>', html_by_page["talks.html"], re.DOTALL

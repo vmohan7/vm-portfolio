@@ -46,6 +46,17 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 - Photograph: `assets/gallery/ai-conference-2026.jpg` (800 × 600), optimized from the first photo in the recap's image viewer (1280 × 960); EXIF removed. Visible scene: two attendees beside the branded conference stage. Identities are not inferred from facial appearance.
 - Placement: newest Presentations entry and one photograph at the top of Gallery, with “View on LinkedIn” source labeling. Reuses one local asset across both pages; not a video preview or official poster.
 
+### Podcast: Disambiguation
+
+- Display title: **The Right Chip for the Right Workload: How Inference Speed Shapes the AI Agentic Era**
+- Official recording: https://www.youtube.com/watch?v=YDTazNT1N-E — published by Disambiguation Podcast; the user-supplied Google share URL redirects to this video.
+- Public release date: September 30, 2026, verified in the expanded YouTube description and publication metadata; not a recording date.
+- Credit: **Podcast guest**; the episode description identifies Vasanth Mohan from SambaNova and Michael Fauscette as host.
+- Summary scope: inference speed, purpose-built silicon, disaggregated inference, and enterprise agent infrastructure, based on the publisher's description. Full playback and transcript were not reviewed.
+- The publisher's biography includes an unverified education claim and uses “Product Marketing Lead” as a title. Neither is adopted into the portfolio biography; the entry uses the verified guest credit. Performance and deployment claims in the description and artwork are not asserted by the portfolio summary.
+- Preview asset: `assets/presentations/disambiguation-2026.jpg` (1280 × 720), optimized from the video metadata thumbnail, https://i.ytimg.com/vi/YDTazNT1N-E/maxresdefault.jpg, with EXIF removed. It is publisher-provided episode artwork, not a gallery photograph or production credit.
+- Placement: second in recent Presentations, after the October 1 conference discussion and before September 24 Code Story. Existing homepage selections and Gallery are unchanged.
+
 ### Podcast: Code Story
 
 - Display title: **The Enterprise AI Chip War: Rethinking LLM Silicon & Inference**
