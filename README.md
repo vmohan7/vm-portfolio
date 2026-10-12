@@ -4,7 +4,7 @@ A fast, accessible, static portfolio of selected writing, presentations, and pub
 
 ## Structure
 
-- `index.html` — short introduction, portrait, and selected links
+- `index.html` — short introduction, portrait, and four image-led selections with dates and accurate credits
 - `writing.html` — recent writing and selected earlier books/tutorials
 - `talks.html` — Presentations: talks, podcasts, and panels; the original URL is retained for existing links
 - `gallery.html` — thirteen sourced photographs from conferences, hackathons, and developer meetups

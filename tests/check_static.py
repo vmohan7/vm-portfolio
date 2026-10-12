@@ -14,7 +14,7 @@ PAGE_NAMES = ("index.html", "writing.html", "talks.html", "gallery.html", "about
 CSS_PATH = ROOT / "styles.css"
 JS_PATH = ROOT / "script.js"
 EXPECTED_IMAGES = {
-    "index.html": ["assets/vasanth-mohan.jpg"],
+    "index.html": ["assets/vasanth-mohan.jpg", "assets/gallery/ai-conference-2026.jpg", "assets/presentations/disambiguation-2026.jpg", "assets/presentations/code-story-2026.jpg"],
     "writing.html": [],
     "talks.html": [
         "assets/gallery/ai-conference-2026.jpg",
@@ -261,7 +261,7 @@ def main() -> int:
     checks.check(not unresolved_fragments, "same-page and cross-page fragments resolve")
     checks.check(
         all(
-            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=6"]
+            [data.get("href", "") for data in parser.link_elements if "stylesheet" in data.get("rel", "").split()] == ["styles.css?v=7"]
             for parser in parsers.values()
         ),
         "all five pages use the versioned shared stylesheet",
@@ -398,8 +398,12 @@ def main() -> int:
     checks.check(
         'href="talks.html#code-story-2026"' in html_by_page["index.html"]
         and code_story in html_by_page["index.html"]
-        and html_by_page["index.html"].count('class="selection-title"') == 3,
-        "the existing homepage retains its curated Code Story selection without adding another section",
+        and html_by_page["index.html"].count('class="selection-title"') == 4
+        and 'href="talks.html#ai-conference-2026"' in html_by_page["index.html"]
+        and 'href="talks.html#disambiguation-2026"' in html_by_page["index.html"]
+        and html_by_page["index.html"].index('href="talks.html#ai-conference-2026"') < html_by_page["index.html"].index('href="talks.html#disambiguation-2026"') < html_by_page["index.html"].index('href="talks.html#code-story-2026"')
+        and 'class="selection-visual writing-visual" aria-hidden="true"' in html_by_page["index.html"],
+        "homepage features four sourced selections, newest first, with real imagery and a decorative writing icon",
     )
     archive_previews = re.findall(
         r'<li class="archive-item talk-entry"[^>]*>.*?</li>', html_by_page["talks.html"], re.DOTALL

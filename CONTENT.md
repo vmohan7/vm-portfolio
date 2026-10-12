@@ -17,6 +17,12 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 
 ## Published selections
 
+### Homepage curation
+
+- The homepage highlights the October 1 AI Conference discussion, September 30 Disambiguation interview, September 24 Code Story interview, then the June 3 SambaNova article. Titles, dates, credits, and summary scope derive from the verified records below.
+- It reuses the conference photograph and publisher-provided episode artwork already documented here, with no new image claims or downloads. Episode artwork is contained rather than cropped. The writing mark is an original, decorative inline document icon, hidden from assistive technology.
+- The page retains its portrait, current role, cream/ink typography, canonical URL, and navigation. Presentation anchors lead to source-backed details; Writing and Gallery remain accessible. No new articles or unpublished Substack content are introduced.
+
 ### Biography wording
 
 - The homepage and About-page introduction use the LinkedIn headline: **Senior Director, Product Marketing and Developer Relations at SambaNova**. The copyable short bio instead reproduces the three-sentence LinkedIn **About** text verbatim, including its own more specific title, "Technical Product Marketing." Source: https://www.linkedin.com/in/v-mohan
