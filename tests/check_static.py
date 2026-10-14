@@ -14,9 +14,10 @@ PAGE_NAMES = ("index.html", "writing.html", "talks.html", "gallery.html", "about
 CSS_PATH = ROOT / "styles.css"
 JS_PATH = ROOT / "script.js"
 EXPECTED_IMAGES = {
-    "index.html": ["assets/vasanth-mohan.jpg", "assets/gallery/ai-conference-2026.jpg", "assets/presentations/disambiguation-2026.jpg", "assets/presentations/code-story-2026.jpg"],
+    "index.html": ["assets/vasanth-mohan.jpg", "assets/presentations/generationship-2026.jpg", "assets/gallery/ai-conference-2026.jpg", "assets/presentations/disambiguation-2026.jpg"],
     "writing.html": [],
     "talks.html": [
+        "assets/presentations/generationship-2026.jpg",
         "assets/gallery/ai-conference-2026.jpg",
         "assets/presentations/disambiguation-2026.jpg",
         "assets/presentations/code-story-2026.jpg",
@@ -288,30 +289,40 @@ def main() -> int:
     actual_images = {name: [data.get("src", "") for data in parser.images] for name, parser in parsers.items()}
     checks.check(actual_images == EXPECTED_IMAGES, "images match the source-backed per-page inventory")
     recent_presentations = re.findall(r'<article class="talk-entry"[^>]*>.*?</article>', html_by_page["talks.html"], re.DOTALL)
+    checks.check(
+        all(v in recent_presentations[0] for v in (
+            'id="generationship-2026"', 'The Killer App for AI', 'Rachel Chalmers',
+            'Podcast guest', 'datetime="2026-10-14"',
+            'https://www.heavybit.com/library/podcasts/generationship/ep-60-the-killer-app-for-ai-with-vasanth-mohan',
+            'https://x.com/heavybit/status/2110402518366736612',
+            'src="assets/presentations/generationship-2026.jpg"',
+        )) and 'playlist?' not in recent_presentations[0],
+        "Generationship leads Presentations with verified guest credit, date, show cover and episode-specific sources",
+    )
     conference_source = "https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/"
     checks.check(
-        all(value in recent_presentations[0] for value in (
+        all(value in recent_presentations[1] for value in (
             'id="ai-conference-2026"', 'Premium Inference for the Agentic AI Era',
             'Speaker', 'Jason Goodison', 'datetime="2026-10-01"',
             'https://agenda.aiconference.com/?session=10d6a43c-96d6-4e44-94c8-47cac67ccb83',
             conference_source, 'src="assets/gallery/ai-conference-2026.jpg"',
             'View on LinkedIn',
-        )) and 'Watch' not in recent_presentations[0],
+        )) and 'Watch' not in recent_presentations[1],
         "the October 1 conference discussion leads Presentations with official details and a sourced photo, not a recording claim",
     )
     code_story = "The Enterprise AI Chip War: Rethinking LLM Silicon &amp; Inference"
     checks.check(
-        all(value in recent_presentations[1] for value in (
+        all(value in recent_presentations[2] for value in (
             'id="disambiguation-2026"', 'The Right Chip for the Right Workload: How Inference Speed Shapes the AI Agentic Era',
             'href="https://www.youtube.com/watch?v=YDTazNT1N-E"', 'Michael Fauscette',
             'Podcast guest', 'Disambiguation Podcast', 'datetime="2026-09-30"',
             'src="assets/presentations/disambiguation-2026.jpg"', 'loading="lazy"',
-        )) and 'Stanford' not in recent_presentations[1],
+        )) and 'Stanford' not in recent_presentations[2],
         "Disambiguation follows the conference with verified episode title, date, guest credit and artwork",
     )
     code_story_url = "https://www.codestory.co/episodes/s13-bonus-the-enterprise-ai-chip-war-rethinking-llm-silicon-inference-with-vasanth-mohan-director-of-product-at-sambanova/"
     checks.check(
-        len(recent_presentations) == 8 and all(value in recent_presentations[2] for value in (
+        len(recent_presentations) == 9 and all(value in recent_presentations[3] for value in (
             'id="code-story-2026"', f'href="{code_story_url}"',
             'src="assets/presentations/code-story-2026.jpg"',
             'loading="lazy"', 'Podcast guest', 'Code Story',
@@ -319,7 +330,7 @@ def main() -> int:
         )),
         "the verified Code Story podcast follows the newest conference discussion",
     )
-    daytona = recent_presentations[3] if len(recent_presentations) > 3 else ""
+    daytona = recent_presentations[4] if len(recent_presentations) > 3 else ""
     checks.check(
         all(value in daytona for value in (
             'id="daytona-ai-builders-2026"', 'Speaker', 'Daytona &amp; SambaNova AI Builders',
@@ -351,7 +362,7 @@ def main() -> int:
     )
     podcast_title = "How Enterprise AI Agents Break Budgets And How To Fix It"
     checks.check(
-        len(recent_presentations) == 8 and all(value in recent_presentations[4] for value in (
+        len(recent_presentations) == 9 and all(value in recent_presentations[5] for value in (
             'id="whats-up-with-tech-2026"',
             'href="https://www.youtube.com/watch?v=7vLJW37wEQ8"',
             'src="assets/presentations/whats-up-with-tech-2026.jpg"',
@@ -363,7 +374,7 @@ def main() -> int:
     )
     episode_links_group = re.search(
         r'<div class="profile-links" role="group" aria-label="Episode links">(.*?)</div>',
-        recent_presentations[4], re.DOTALL,
+        recent_presentations[5], re.DOTALL,
     )
     episode_links = [
         (href, unescape(re.sub(r"<[^>]+>", "", text)).replace("↗", "").strip())
@@ -381,7 +392,7 @@ def main() -> int:
         ],
         "the podcast entry links to the exact episode on each platform, not personal profiles",
     )
-    docsie_episode = recent_presentations[5] if len(recent_presentations) > 5 else ""
+    docsie_episode = recent_presentations[6] if len(recent_presentations) > 5 else ""
     checks.check(
         all(part in docsie_episode for part in (
             'id="so-what-about-ai-agents-2026"',
@@ -396,12 +407,9 @@ def main() -> int:
         "the Docsie episode has its verified title, date, guest and host credits, artwork, and exact platform links",
     )
     checks.check(
-        'href="talks.html#code-story-2026"' in html_by_page["index.html"]
-        and code_story in html_by_page["index.html"]
-        and html_by_page["index.html"].count('class="selection-title"') == 4
-        and 'href="talks.html#ai-conference-2026"' in html_by_page["index.html"]
-        and 'href="talks.html#disambiguation-2026"' in html_by_page["index.html"]
-        and html_by_page["index.html"].index('href="talks.html#ai-conference-2026"') < html_by_page["index.html"].index('href="talks.html#disambiguation-2026"') < html_by_page["index.html"].index('href="talks.html#code-story-2026"')
+        html_by_page["index.html"].count('class="selection-title"') == 4
+        and all(f'href="talks.html#{anchor}"' in html_by_page["index.html"] for anchor in ('generationship-2026', 'ai-conference-2026', 'disambiguation-2026'))
+        and html_by_page["index.html"].index('href="talks.html#generationship-2026"') < html_by_page["index.html"].index('href="talks.html#ai-conference-2026"') < html_by_page["index.html"].index('href="talks.html#disambiguation-2026"')
         and 'class="selection-visual writing-visual" aria-hidden="true"' in html_by_page["index.html"],
         "homepage features four sourced selections, newest first, with real imagery and a decorative writing icon",
     )

@@ -19,7 +19,7 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 
 ### Homepage curation
 
-- The homepage highlights the October 1 AI Conference discussion, September 30 Disambiguation interview, September 24 Code Story interview, then the June 3 SambaNova article. Titles, dates, credits, and summary scope derive from the verified records below.
+- The homepage highlights the October 14 Generationship interview, October 1 AI Conference discussion, September 30 Disambiguation interview, then the June 3 SambaNova article. Titles, dates, credits, and summary scope derive from the verified records below.
 - It reuses the conference photograph and publisher-provided episode artwork already documented here, with no new image claims or downloads. Episode artwork is contained rather than cropped. The writing mark is an original, decorative inline document icon, hidden from assistive technology.
 - The page retains its portrait, current role, cream/ink typography, canonical URL, and navigation. Presentation anchors lead to source-backed details; Writing and Gallery remain accessible. No new articles or unpublished Substack content are introduced.
 
@@ -51,6 +51,17 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 - Vasanth's public photo recap: https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/ — explicitly describes the AI Conference discussion with Jason Goodison and infrastructure from chips to agents.
 - Photograph: `assets/gallery/ai-conference-2026.jpg` (800 × 600), optimized from the first photo in the recap's image viewer (1280 × 960); EXIF removed. Visible scene: two attendees beside the branded conference stage. Identities are not inferred from facial appearance.
 - Placement: newest Presentations entry and one photograph at the top of Gallery, with “View on LinkedIn” source labeling. Reuses one local asset across both pages; not a video preview or official poster.
+
+### Podcast: Generationship
+
+- Display title: **The Killer App for AI** — episode 60 of Heavybit's Generationship.
+- Official episode and transcript: https://www.heavybit.com/library/podcasts/generationship/ep-60-the-killer-app-for-ai-with-vasanth-mohan
+- Publisher announcement: https://x.com/heavybit/status/2110402518366736612 — identifies Vasanth Mohan of SambaNova as Rachel Chalmers' guest.
+- Release date: October 14, 2026, displayed on the official episode page; not a recording date. The audio filename contains an earlier date and is not used to infer publication.
+- Credit: **Podcast guest**. No host or producer credit is implied. The publisher's historical role wording is not adopted as Vasanth's current title.
+- Summary scope: the official overview and visible transcript discuss inference latency, coding agents, engineering judgment, and business value versus token/code-volume metrics. No full playback or quantitative productivity claim is made.
+- Artwork: `assets/presentations/generationship-2026.jpg` (800 × 800), optimized, metadata-free copy of the official show cover displayed on the episode page: https://cdn.sanity.io/images/50q6fr1p/production/20f1ba4a8726f5453a36db0c061b7373ec74981e-3000x3000.jpg . This is show artwork, not episode-specific portrait photography.
+- Placement: newest recent Presentations entry and first homepage selection, replacing the homepage's Code Story slot. Code Story remains on Presentations. Gallery is unchanged. Generic Apple Podcasts and YouTube playlist links are not labeled as episode links.
 
 ### Podcast: Disambiguation
 
