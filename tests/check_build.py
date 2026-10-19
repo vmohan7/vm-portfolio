@@ -32,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix="site-build-", dir=ROOT) as temp:
     )
     assert (stage / "CNAME").read_text(encoding="utf-8").strip() == "www.vasanthmohan.com"
     assert all((stage / page.name).read_bytes() == page.read_bytes() for page in ROOT.glob("*.html"))
-    assert (stage / "assets/vasanth-mohan-portrait-v2.jpg").is_file()
+    assert (stage / "assets/vasanth-mohan-portrait-v3.jpg").is_file()
     assert not (stage / ".git").exists() and not (stage / "CONTENT.md").exists()
     assert not (stage / "README.md").exists() and not (stage / "tests").exists()
     print("PASS  generated artifact has current canonical pages, crawl files and public assets only")
