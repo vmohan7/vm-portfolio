@@ -215,10 +215,11 @@ The selected images were visually checked against their source posts. The portra
 
 ### Portrait
 
-- Asset: `assets/vasanth-mohan.jpg`
-- Context: public LinkedIn profile portrait
-- Visible scene: outdoor portrait
-- Source: https://www.linkedin.com/in/v-mohan
+- Asset: `assets/vasanth-mohan-portrait.jpg`
+- Context: photograph supplied by Vasanth with an explicit request to use it as the site's main profile image.
+- Visible scene: outdoor portrait in a SambaNova cap beside rocks, foliage, and a stream.
+- Treatment: face-centered square head-and-shoulders crop; optimized to 800 × 800 with EXIF/location metadata removed. Used on Home and About. The original attachment stays outside the public repository.
+- Source: directly supplied by Vasanth for public portfolio use; replaces the previous LinkedIn portrait.
 
 ### RAISE Summit, Paris
 
