@@ -14,7 +14,7 @@ PAGE_NAMES = ("index.html", "writing.html", "talks.html", "gallery.html", "about
 CSS_PATH = ROOT / "styles.css"
 JS_PATH = ROOT / "script.js"
 EXPECTED_IMAGES = {
-    "index.html": ["assets/vasanth-mohan-portrait.jpg", "assets/presentations/generationship-2026.jpg", "assets/gallery/ai-conference-2026.jpg", "assets/presentations/disambiguation-2026.jpg"],
+    "index.html": ["assets/vasanth-mohan-portrait-v2.jpg", "assets/presentations/generationship-2026.jpg", "assets/gallery/ai-conference-2026.jpg", "assets/presentations/disambiguation-2026.jpg"],
     "writing.html": [],
     "talks.html": [
         "assets/presentations/generationship-2026.jpg",
@@ -44,12 +44,12 @@ EXPECTED_IMAGES = {
         "assets/gallery/builders-founders-meetup.jpg",
         "assets/gallery/austin-meetup.jpg",
     ],
-    "about.html": ["assets/vasanth-mohan-portrait.jpg"],
+    "about.html": ["assets/vasanth-mohan-portrait-v2.jpg"],
 }
 EXPECTED_DECLARED_DIMENSIONS = {
     "assets/presentations/disambiguation-2026.jpg": ("1280", "720"),
     "assets/gallery/ai-conference-2026.jpg": ("800", "600"),
-    "assets/vasanth-mohan-portrait.jpg": ("800", "800"),
+    "assets/vasanth-mohan-portrait-v2.jpg": ("800", "800"),
     "assets/presentations/code-story-2026.jpg": ("800", "800"),
     "assets/presentations/daytona-ai-builders-2026.jpg": ("800", "800"),
     "assets/presentations/so-what-about-ai-agents-2026.jpg": ("1280", "720"),
