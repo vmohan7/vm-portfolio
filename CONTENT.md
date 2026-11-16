@@ -19,7 +19,7 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 
 ### Homepage curation
 
-- The homepage highlights the October 14 Generationship interview, October 1 AI Conference discussion, September 30 Disambiguation interview, then the June 3 SambaNova article. Titles, dates, credits, and summary scope derive from the verified records below.
+- The homepage highlights the October 14 Generationship interview, October 1 AI Conference discussion, September 30 Disambiguation interview, and the November 15 SambaNova article on its Intel partnership. Titles, dates, credits, and summary scope derive from the verified records below.
 - It reuses the conference photograph and publisher-provided episode artwork already documented here, with no new image claims or downloads. Episode artwork is contained rather than cropped. The writing mark is an original, decorative inline document icon, hidden from assistive technology.
 - The page retains its portrait, current role, cream/ink typography, canonical URL, and navigation. Presentation anchors lead to source-backed details; Writing and Gallery remain accessible. No new articles or unpublished Substack content are introduced.
 
@@ -32,7 +32,17 @@ Current public positioning used on the site: Vasanth Mohan's LinkedIn headline i
 - Inference topics are grounded in the SambaNova bylined article and recorded talks below. AR/VR and 5G topics are grounded in the AWE panel record. FusedVR teaching, O'Reilly co-authorship with Erin Pangilinan and Steve Lukas, and the EnterVR appearance are grounded in the original sources below.
 - The biography does not infer degrees, employer tenure, audience figures, awards, production credits, or responsibility for hardware engineering from those sources.
 
-### Writing
+### Writing: The Air-Cooled Token Factory
+
+- Title: **The Air-Cooled Token Factory: Intel GPU D-Series + SambaRack SN50**
+- Source: https://sambanova.ai/blog/the-air-cooled-token-factory-intel-gpu-d-series-sambarack-sn50
+- Public date: November 15, 2026, displayed on the publisher page; not inferred from the request date.
+- Public byline: **SambaNova | SuperComputing**, not a personal byline. Vasanth directly confirmed that he wrote the piece on behalf of SambaNova and requested public portfolio inclusion with the Intel partnership context.
+- Portfolio credit: **Written by Vasanth Mohan on behalf of SambaNova**. Partnership: **SambaNova & Intel**, corroborated by the article body. This does not claim Intel co-authorship, personal endorsement, or hardware engineering ownership.
+- Original summary covers the article's Intel D-Series prefill / SN50 decode architecture, open serving software, and existing air-cooled facilities. Performance figures, deployment guarantees, and forecast claims are not repeated as independently verified facts.
+- Placement: first on Writing at `#air-cooled-token-factory`, and replaces the older homepage writing selection. The June 3 bylined article remains on Writing. The full text remains with the publisher; no cross-post or new canonical page is created.
+
+### Writing: Disaggregated inference demo
 
 - Display title: **The First Disaggregated Inference Demo for AI Agents Is Live**
 - Source: https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live

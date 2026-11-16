@@ -299,6 +299,19 @@ def main() -> int:
         )) and 'playlist?' not in recent_presentations[0],
         "Generationship leads Presentations with verified guest credit, date, show cover and episode-specific sources",
     )
+    token_factory_url = "https://sambanova.ai/blog/the-air-cooled-token-factory-intel-gpu-d-series-sambarack-sn50"
+    checks.check(
+        all(v in html_by_page["writing.html"] for v in (
+            'id="air-cooled-token-factory"', token_factory_url,
+            'The Air-Cooled Token Factory: Intel GPU D-Series + SambaRack SN50',
+            'Written by Vasanth Mohan on behalf of SambaNova', 'SambaNova &amp; Intel',
+            'datetime="2026-11-15"',
+        ))
+        and html_by_page["writing.html"].index(token_factory_url) < html_by_page["writing.html"].index('https://sambanova.ai/blog/first-disaggregated-inference-demo-for-ai-agents-live')
+        and 'href="writing.html#air-cooled-token-factory"' in html_by_page["index.html"]
+        and 'Intel partnership' in html_by_page["index.html"],
+        "new SambaNova writing preserves corporate authorship context, Intel partnership, verified date and homepage detail link",
+    )
     conference_source = "https://www.linkedin.com/feed/update/urn:li:activity:7511573090246524928/"
     checks.check(
         all(value in recent_presentations[1] for value in (
